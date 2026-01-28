@@ -257,11 +257,11 @@ export default SVGComponent;
 
 export const Logo = () => {
   return (
-    <Link href="/" className="flex items-center gap-2">
+    <Link href="/" className="flex items-center">
       {/* <LogoSVG /> */}
       <SVGComponent className="size-10
 text-black dark:text-white" />
-      {/* <span className="text-2xl font-medium">Agentixly</span> */}
+      {/* <span className="text-xl font-medium">Agentixly</span> */}
     </Link>
   );
 };
