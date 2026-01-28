@@ -259,8 +259,8 @@ export const Hero3DWebGL = () => {
                                     Join Waiting List
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent>
-                                <div className="relative px-6 py-6 md:px-8 md:py-6 border border-divide bg-background/95 backdrop-blur-xl">
+                            <DialogContent className="px-4">
+                                <div className="relative px-6 py-6 md:px-8 md:py-6 border border-divide bg-background/95 backdrop-blur-xl bg-white dark:bg-neutral-900">
                                     <CornerIcons />
                                     <DialogHeader className="mb-4">
                                         <DialogTitle className="text-base md:text-lg">
@@ -286,7 +286,7 @@ export const Hero3DWebGL = () => {
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 placeholder="you@company.com"
-                                                className="block w-full rounded-md border border-divide bg-background px-3 py-2 text-sm outline-none ring-0 transition focus:border-neutral-500 dark:focus:border-neutral-400 dark:bg-neutral-950"
+                                                className="block w-full rounded-md border border-divide bg-background px-3 py-2 text-sm outline-none ring-0 transition focus:border-brand focus:ring-1 focus:ring-brand dark:bg-neutral-950 text-[16px]"
                                                 disabled={isSubmitting}
                                                 required
                                             />

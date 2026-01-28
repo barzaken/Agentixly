@@ -5,13 +5,13 @@ import { Toaster } from "sonner";
 export function SonnerProvider() {
   return (
     <Toaster
-      richColors={false}
+      richColors
       position="top-center"
       closeButton
       toastOptions={{
         classNames: {
           toast:
-            "border border-divide bg-background/95 backdrop-blur-md text-sm text-foreground",
+            "border border-divide bg-background/90 backdrop-blur-md text-sm",
         },
       }}
     />
