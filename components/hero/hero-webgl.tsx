@@ -134,7 +134,7 @@ const Scene = ({ isMobile }: { isMobile: boolean }) => {
 
 export const Hero3DWebGL = () => {
     const isMobile = useIsMobile()
-    const titleWords = "Agentixly".split(" ")
+    const titleWords = "Agentix".split(" ")
     const subtitle = "The UI kit for AI apps."
     const [visibleWords, setVisibleWords] = useState(0)
     const [subtitleVisible, setSubtitleVisible] = useState(false)
@@ -264,7 +264,7 @@ export const Hero3DWebGL = () => {
                                     <CornerIcons />
                                     <DialogHeader className="mb-4">
                                         <DialogTitle className="text-base md:text-lg">
-                                            Join the Agentixly waitlist
+                                            Join the Agentix waitlist
                                         </DialogTitle>
                                         <DialogDescription>
                                             Be the first to know when new agentic workflow features
