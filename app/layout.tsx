@@ -5,7 +5,7 @@ import { interDisplay } from '@/fonts/inter-display/inter'
 import { dmMono } from '@/fonts/dm-mono'
 import { CleanNavbar } from '@/components/clean-navbar'
 export const metadata: Metadata = {
-  title: 'Agentixly - Futuristic AI UI Pack',
+  title: 'Agentixly - The AI UI Pack',
   description: 'A clean, futuristic AI-themed UI component library for React and Next.js',
   appleWebApp: {
     capable: true,

@@ -13,9 +13,7 @@ import {
   useTransform,
 } from "motion/react";
 import { ModeToggle } from "@/components/mode-toggle";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Menu01Icon } from "@hugeicons/core-free-icons";
-import { Cancel01Icon } from "@hugeicons/core-free-icons";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/container/button";
 const items = [
   {
@@ -56,8 +54,7 @@ const MobileNav = ({ items }: { items: { title: string; href: string }[] }) => {
         className="shadow-aceternity flex size-6 flex-col items-center justify-center rounded-md"
         aria-label="Toggle menu"
       >
-        <HugeiconsIcon icon={Menu01Icon} className="size-4 shrink-0 text-gray-600" />
-        {/* <HamburgerIcon className="size-4 shrink-0 text-gray-600" /> */}
+        <Menu className="size-4 shrink-0 text-gray-600" />
       </button>
 
       <AnimatePresence>
@@ -80,8 +77,7 @@ const MobileNav = ({ items }: { items: { title: string; href: string }[] }) => {
                 className="shadow-aceternity flex size-6 flex-col items-center justify-center rounded-md"
                 aria-label="Toggle menu"
               >
-                <HugeiconsIcon icon={Cancel01Icon} className="size-4 shrink-0 text-gray-600" />
-                {/* <CloseIcon className="size-4 shrink-0 text-gray-600" /> */}
+                <X className="size-4 shrink-0 text-gray-600" />
               </button>
             </div>
             <div className="divide-divide border-divide mt-6 flex flex-col divide-y border-t">

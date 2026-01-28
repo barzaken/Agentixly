@@ -1,11 +1,9 @@
 "use client";
 
-import { Sun01Icon } from "@hugeicons/core-free-icons";
-import { Moon01Icon } from "@hugeicons/core-free-icons";
-// import { MoonIcon, SunIcon } from "@/src/icons/general";
+import { Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-import { HugeiconsIcon } from "@hugeicons/react";
+
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
   const [systemTheme, setSystemTheme] = useState<"light" | "dark">("light");
@@ -43,8 +41,8 @@ export function ModeToggle() {
       onClick={SWITCH}
       className="hover:shadow-input relative flex cursor-pointer items-center justify-center rounded-xl p-2 text-neutral-500 dark:text-neutral-500"
     >
-        <HugeiconsIcon icon={Sun01Icon} className="size-4 scale-100 rotate-0 text-gray-600 transition-all dark:scale-0 dark:-rotate-90 dark:text-gray-300" />
-      <HugeiconsIcon icon={Moon01Icon} className="absolute size-4 scale-0 rotate-90 text-gray-600 transition-all dark:scale-100 dark:rotate-0 dark:text-gray-300" />
+      <Sun className="size-4 scale-100 rotate-0 text-gray-600 transition-all dark:scale-0 dark:-rotate-90 dark:text-gray-300" />
+      <Moon className="absolute size-4 scale-0 rotate-90 text-gray-600 transition-all dark:scale-100 dark:rotate-0 dark:text-gray-300" />
       <span className="sr-only">Toggle theme</span>
     </button>
   );

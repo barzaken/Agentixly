@@ -7,7 +7,7 @@ import { Hero3DWebGL as Hero3D } from "@/components/hero/hero-webgl"
 export default function Home() {
     return (
         <>
-            {/* <DivideX /> */}
+            <DivideX />
             <Hero3D />
             {/* <Hero /> */}
             <DivideX />

@@ -7,12 +7,39 @@ import * as THREE from "three"
 import { Container } from "@/components/ui/container/container"
 import { Badge } from "@/components/badge"
 import { useIsMobile } from "@/hooks/use-is-mobile"
+import { cn } from "@/lib/utils"
+import { IconCard } from "@/components/ui/cards/icon-card"
 const TEXTUREMAP = { src: "https://i.postimg.cc/XYwvXN8D/img-4.png" }
 const DEPTHMAP = { src: "https://i.postimg.cc/2SHKQh2q/raw-4.webp" }
 
 const WIDTH = 300
 const HEIGHT = 300
+const Icon = ({ className }: { className: string }) => {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            width={24}
+            height={24}
+            strokeWidth="1"
+            stroke="currentColor"
+            className={cn("text-foreground size-6 absolute", className)}
+        >
+            <title>Icon</title>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+        </svg>
+    );
+};
 
+const Icons = () => (
+    <>
+        <Icon className="-top-3 -left-3" />
+        <Icon className="-top-3 -right-3" />
+        <Icon className="-bottom-3 -left-3" />
+        <Icon className="-bottom-3 -right-3" />
+    </>
+);
 const Scene = ({ isMobile }: { isMobile: boolean }) => {
     const [rawMap, depthMap] = useTexture([TEXTUREMAP.src, DEPTHMAP.src])
     const meshRef = useRef<THREE.Mesh>(null)
@@ -144,8 +171,42 @@ export const Hero3DWebGL = () => {
     }, [visibleWords, titleWords.length])
 
     return (
-        <Container className="border-divide flex flex-col items-center justify-center border-x px-4 pt-10 pb-10 md:pt-12 md:pb-20 h-svh">
-            <div className="relative overflow-hidden flex flex-col items-center justify-center h-full w-full">
+        <Container className="border-divide flex flex-col items-center justify-center border-x px-4 pt-10 pb-10 md:pt-12 md:pb-20 h-svh relative">
+            <div className="relative flex flex-col items-center justify-center h-full w-full">
+                <div className="relative pt-4 items-center w-full px-10 flex justify-center flex-col z-0 mt-6">
+                    <IconCard className="uppercase w-full max-w-3xl mx-auto text-center bg-background/90 flex flex-col items-center justify-center">
+                        {/* <Badge text="Waiting List is open" /> */}
+                        {/* <div className="mt-6 md:mt-8"> */}
+                            <div className="text-3xl md:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-orbitron">
+                                <div className="flex justify-center space-x-2 lg:space-x-6 overflow-hidden text-black dark:text-white">
+                                    {titleWords.map((word, index) => (
+                                        <div
+                                            key={index}
+                                            className={index < visibleWords ? "fade-in" : ""}
+                                            style={{
+                                                animationDelay: `${index * 0.13 + (delays[index] || 0)}s`,
+                                                opacity: index < visibleWords ? undefined : 0,
+                                            }}
+                                        >
+                                            {word}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="text-xs md:text-xl xl:text-2xl 2xl:text-3xl mt-2 md:mt-3 overflow-hidden text-black dark:text-white font-bold max-w-4xl mx-auto text-center px-4">
+                                <div
+                                    className={subtitleVisible ? "fade-in-subtitle" : ""}
+                                    style={{
+                                        animationDelay: `${titleWords.length * 0.13 + 0.2 + subtitleDelay}s`,
+                                        opacity: subtitleVisible ? undefined : 0,
+                                    }}
+                                >
+                                    {subtitle}
+                                </div>
+                            </div>
+                        {/* </div> */}
+                    </IconCard>
+                </div>
                 <Canvas
                     flat
                     gl={{
@@ -159,37 +220,6 @@ export const Hero3DWebGL = () => {
                 >
                     <Scene isMobile={isMobile} />
                 </Canvas>
-                <div className="uppercase items-center w-full pointer-events-none px-10 flex justify-center flex-col z-0 mt-6">
-
-                    <Badge text="For fast moving engineering teams." />
-                    <div className="text-3xl md:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-orbitron">
-                        <div className="flex mt-8 space-x-2 lg:space-x-6 overflow-hidden text-black dark:text-white">
-                            {titleWords.map((word, index) => (
-                                <div
-                                    key={index}
-                                    className={index < visibleWords ? "fade-in" : ""}
-                                    style={{
-                                        animationDelay: `${index * 0.13 + (delays[index] || 0)}s`,
-                                        opacity: index < visibleWords ? undefined : 0,
-                                    }}
-                                >
-                                    {word}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="text-xs md:text-xl xl:text-2xl 2xl:text-3xl mt-2 overflow-hidden text-black dark:text-white font-bold max-w-4xl mx-auto text-center px-4">
-                        <div
-                            className={subtitleVisible ? "fade-in-subtitle" : ""}
-                            style={{
-                                animationDelay: `${titleWords.length * 0.13 + 0.2 + subtitleDelay}s`,
-                                opacity: subtitleVisible ? undefined : 0,
-                            }}
-                        >
-                            {subtitle}
-                        </div>
-                    </div>
-                </div>
             </div>
         </Container>
     )
