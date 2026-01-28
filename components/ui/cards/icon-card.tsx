@@ -24,7 +24,7 @@ const Icon = ({ className }: { className?: string }) => {
     );
 };
 
-const Icons = () => (
+export const Icons = () => (
     <>
         <Icon className="-top-3 -left-3 text-brand" />
         <Icon className="-top-3 -right-3" />

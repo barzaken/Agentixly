@@ -8,41 +8,24 @@ import { Container } from "@/components/ui/container/container"
 import { Badge } from "@/components/badge"
 import { useIsMobile } from "@/hooks/use-is-mobile"
 import { cn } from "@/lib/utils"
-import { IconCard } from "@/components/ui/cards/icon-card"
+import { IconCard, Icons as CornerIcons } from "@/components/ui/cards/icon-card"
 import { Button } from "../ui/container/button"
 import MeshGradient from "../mesh-gradient"
 import { PixelatedCanvas } from "../pixelated-canvas"
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { toast } from "sonner"
 const TEXTUREMAP = { src: "https://i.postimg.cc/XYwvXN8D/img-4.png" }
 const DEPTHMAP = { src: "https://i.postimg.cc/2SHKQh2q/raw-4.webp" }
 
 const WIDTH = 300
 const HEIGHT = 300
-const Icon = ({ className }: { className: string }) => {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            width={24}
-            height={24}
-            strokeWidth="1"
-            stroke="currentColor"
-            className={cn("text-foreground size-6 absolute", className)}
-        >
-            <title>Icon</title>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
-        </svg>
-    );
-};
-
-const Icons = () => (
-    <>
-        <Icon className="-top-3 -left-3" />
-        <Icon className="-top-3 -right-3" />
-        <Icon className="-bottom-3 -left-3" />
-        <Icon className="-bottom-3 -right-3" />
-    </>
-);
 const Scene = ({ isMobile }: { isMobile: boolean }) => {
     const [rawMap, depthMap] = useTexture([TEXTUREMAP.src, DEPTHMAP.src])
     const meshRef = useRef<THREE.Mesh>(null)
@@ -157,6 +140,9 @@ export const Hero3DWebGL = () => {
     const [subtitleVisible, setSubtitleVisible] = useState(false)
     const [delays, setDelays] = useState<number[]>([])
     const [subtitleDelay, setSubtitleDelay] = useState(0)
+    const [dialogOpen, setDialogOpen] = useState(false)
+    const [email, setEmail] = useState("")
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
         setDelays(titleWords.map(() => Math.random() * 0.07))
@@ -172,6 +158,47 @@ export const Hero3DWebGL = () => {
             return () => clearTimeout(timeout)
         }
     }, [visibleWords, titleWords.length])
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault()
+        const trimmedEmail = email.trim()
+
+        if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+            toast.error("Please enter a valid email address.")
+            return
+        }
+
+        try {
+            setIsSubmitting(true)
+            const response = await fetch("/api/waitlist", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: trimmedEmail }),
+            })
+
+            const data = await response.json().catch(() => null)
+
+            if (!response.ok || !data?.success) {
+                toast.error(
+                    data?.error ??
+                    "Something went wrong while joining the waitlist. Please try again."
+                )
+                return
+            }
+
+            toast.success("You're on the waitlist!")
+            setDialogOpen(false)
+            setEmail("")
+        } catch {
+            toast.error(
+                "Unable to reach the server. Please check your connection and try again."
+            )
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
 
     return (
         <Container className="border-divide flex flex-col items-center justify-center border-x px-4 pt-10 pb-10 md:pt-12 md:pb-20 h-svh relative">
@@ -226,9 +253,55 @@ export const Hero3DWebGL = () => {
                         
                     </Canvas>
                     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 flex gap-2 z-10 text-xs sm:text-sm">
-                        <Button className="whitespace-nowrap px-3 py-1.5 sm:px-4 sm:py-2">
-                            Join Waiting List
-                        </Button>
+                        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                            <DialogTrigger asChild>
+                                <Button className="whitespace-nowrap px-3 py-1.5 sm:px-4 sm:py-2">
+                                    Join Waiting List
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <div className="relative px-6 py-6 md:px-8 md:py-6 border border-divide bg-background/95 backdrop-blur-xl">
+                                    <CornerIcons />
+                                    <DialogHeader className="mb-4">
+                                        <DialogTitle className="text-base md:text-lg">
+                                            Join the Agentixly waitlist
+                                        </DialogTitle>
+                                        <DialogDescription>
+                                            Be the first to know when new agentic workflow features
+                                            and components drop.
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        <div className="space-y-1">
+                                            <label
+                                                htmlFor="waitlist-email"
+                                                className="text-xs font-medium text-neutral-700 dark:text-neutral-300"
+                                            >
+                                                Work email
+                                            </label>
+                                            <input
+                                                id="waitlist-email"
+                                                type="email"
+                                                autoComplete="email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                placeholder="you@company.com"
+                                                className="block w-full rounded-md border border-divide bg-background px-3 py-2 text-sm outline-none ring-0 transition focus:border-neutral-500 dark:focus:border-neutral-400 dark:bg-neutral-950"
+                                                disabled={isSubmitting}
+                                                required
+                                            />
+                                        </div>
+                                        <Button
+                                            type="submit"
+                                            className="w-full text-sm md:text-base"
+                                            disabled={isSubmitting}
+                                        >
+                                            {isSubmitting ? "Joining..." : "Join waitlist"}
+                                        </Button>
+                                    </form>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
                         <Button
                             variant="secondary"
                             className="whitespace-nowrap bg-stripes px-3 py-1.5 sm:px-4 sm:py-2"

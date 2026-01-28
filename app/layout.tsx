@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { interDisplay } from '@/fonts/inter-display/inter'
 import { dmMono } from '@/fonts/dm-mono'
 import { CleanNavbar } from '@/components/clean-navbar'
+import { SonnerProvider } from '@/components/sonner-provider'
 export const metadata: Metadata = {
   title: 'Agentixly - The AI UI Pack',
   description: 'A clean, futuristic AI-themed UI component library for React and Next.js',
@@ -31,6 +32,7 @@ export default function RootLayout({
         >
           <CleanNavbar />
           {children}
+          <SonnerProvider />
         </ThemeProvider>
       </body>
     </html>
