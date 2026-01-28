@@ -25,7 +25,7 @@ export function Button<T extends React.ElementType = "button">({
     <Component
       {...(props as any)}
       className={cn(
-        "block rounded-xl px-6 py-2 text-center text-sm font-medium transition duration-150 active:scale-[0.98] sm:text-base",
+        "block roundedxl px-6 py-2 text-center text-sm font-medium transition duration-150 active:scale-[0.98] sm:text-base",
         variant === "primary"
           ? "bg-charcoal-900 text-white dark:bg-white dark:text-black"
           : variant === "brand"

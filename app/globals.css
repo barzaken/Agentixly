@@ -125,3 +125,25 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+
+  .bg-stripes {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      #f1f1f1 0,
+      #f1f1f1 1px,
+      transparent 0,
+      transparent 50%
+    );
+    background-size: 10px 10px;
+  }
+
+  .dark .bg-stripes {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--color-neutral-800) 0,
+      var(--color-neutral-800) 1px,
+      transparent 0,
+      transparent 50%
+    );
+  }

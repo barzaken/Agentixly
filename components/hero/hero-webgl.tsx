@@ -9,6 +9,9 @@ import { Badge } from "@/components/badge"
 import { useIsMobile } from "@/hooks/use-is-mobile"
 import { cn } from "@/lib/utils"
 import { IconCard } from "@/components/ui/cards/icon-card"
+import { Button } from "../ui/container/button"
+import MeshGradient from "../mesh-gradient"
+import { PixelatedCanvas } from "../pixelated-canvas"
 const TEXTUREMAP = { src: "https://i.postimg.cc/XYwvXN8D/img-4.png" }
 const DEPTHMAP = { src: "https://i.postimg.cc/2SHKQh2q/raw-4.webp" }
 
@@ -138,7 +141,7 @@ const Scene = ({ isMobile }: { isMobile: boolean }) => {
     })
 
     // const scaleFactor = 0.3
-    const scaleFactor = isMobile ? 0.7 : 0.3
+    const scaleFactor = isMobile ? 0.5 : 0.3
     return (
         <mesh ref={meshRef} scale={[w * scaleFactor, h * scaleFactor, 1]} material={material}>
             <planeGeometry />
@@ -173,53 +176,68 @@ export const Hero3DWebGL = () => {
     return (
         <Container className="border-divide flex flex-col items-center justify-center border-x px-4 pt-10 pb-10 md:pt-12 md:pb-20 h-svh relative">
             <div className="relative flex flex-col items-center justify-center h-full w-full">
-                <div className="relative pt-4 items-center w-full px-10 flex justify-center flex-col z-0 mt-6">
+                <div className="relative pt-4 items-center w-full  flex justify-center flex-col z-0 mt-6 px-2">
                     <IconCard className="uppercase w-full max-w-3xl mx-auto text-center bg-background/90 flex flex-col items-center justify-center">
                         {/* <Badge text="Waiting List is open" /> */}
                         {/* <div className="mt-6 md:mt-8"> */}
-                            <div className="text-3xl md:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-orbitron">
-                                <div className="flex justify-center space-x-2 lg:space-x-6 overflow-hidden text-black dark:text-white">
-                                    {titleWords.map((word, index) => (
-                                        <div
-                                            key={index}
-                                            className={index < visibleWords ? "fade-in" : ""}
-                                            style={{
-                                                animationDelay: `${index * 0.13 + (delays[index] || 0)}s`,
-                                                opacity: index < visibleWords ? undefined : 0,
-                                            }}
-                                        >
-                                            {word}
-                                        </div>
-                                    ))}
-                                </div>
+                        <div className="text-3xl md:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-orbitron">
+                            <div className="flex justify-center space-x-2 lg:space-x-6 overflow-hidden text-black dark:text-white">
+                                {titleWords.map((word, index) => (
+                                    <div
+                                        key={index}
+                                        className={index < visibleWords ? "fade-in" : ""}
+                                        style={{
+                                            animationDelay: `${index * 0.13 + (delays[index] || 0)}s`,
+                                            opacity: index < visibleWords ? undefined : 0,
+                                        }}
+                                    >
+                                        {word}
+                                    </div>
+                                ))}
                             </div>
-                            <div className="text-xs md:text-xl xl:text-2xl 2xl:text-3xl mt-2 md:mt-3 overflow-hidden text-black dark:text-white font-bold max-w-4xl mx-auto text-center px-4">
-                                <div
-                                    className={subtitleVisible ? "fade-in-subtitle" : ""}
-                                    style={{
-                                        animationDelay: `${titleWords.length * 0.13 + 0.2 + subtitleDelay}s`,
-                                        opacity: subtitleVisible ? undefined : 0,
-                                    }}
-                                >
-                                    {subtitle}
-                                </div>
+                        </div>
+                        <div className="text-xs md:text-xl xl:text-2xl 2xl:text-3xl mt-2 md:mt-3 overflow-hidden text-black dark:text-white font-bold max-w-4xl mx-auto text-center px-4">
+                            <div
+                                className={subtitleVisible ? "fade-in-subtitle" : ""}
+                                style={{
+                                    animationDelay: `${titleWords.length * 0.13 + 0.2 + subtitleDelay}s`,
+                                    opacity: subtitleVisible ? undefined : 0,
+                                }}
+                            >
+                                {subtitle}
                             </div>
+                        </div>
                         {/* </div> */}
                     </IconCard>
                 </div>
-                <Canvas
-                    flat
-                    gl={{
-                        antialias: true,
-                        alpha: true,
-                        powerPreference: "high-performance",
-                    }}
-                    camera={{ position: [0, 0, 1] }}
-                    style={{ background: "transparent" }}
-                    className="z-10"
-                >
-                    <Scene isMobile={isMobile} />
-                </Canvas>
+                <div className="px-2 h-full border-divide w-full relative">
+                    <Canvas
+                        flat
+                        gl={{
+                            antialias: true,
+                            alpha: true,
+                            powerPreference: "high-performance",
+                        }}
+                        camera={{ position: [0, 0, 1] }}
+                        style={{ background: "transparent" }}
+                        className="z-10 relative border-x border-b max-w-3xl mx-auto border-divide"
+                    >
+                        <Scene isMobile={isMobile} />
+                        
+                    </Canvas>
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 flex gap-2 z-10 text-xs sm:text-sm">
+                        <Button className="whitespace-nowrap px-3 py-1.5 sm:px-4 sm:py-2">
+                            Join Waiting List
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            className="whitespace-nowrap bg-stripes px-3 py-1.5 sm:px-4 sm:py-2"
+                        >
+                            View Components
+                        </Button>
+                    </div>
+                </div>
+
             </div>
         </Container>
     )

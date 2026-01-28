@@ -35,10 +35,9 @@ const Icons = () => (
 
 export const IconCard = ({ children, className }: IconCardProps) => {
     return (
-        <div className="py-4">
             <div
                 className={cn(
-                    "relative px-6 py-6 md:px-10 md:py-8",
+                    "relative px-6 py-6 md:px-10 md:py-8 border border-divide",
                     // "shadow-[0_0_0_1px_rgba(148,163,184,0.1)]",
                     "pointer-events-auto",
                     className,
@@ -47,7 +46,6 @@ export const IconCard = ({ children, className }: IconCardProps) => {
                 <Icons />
                 {children}
             </div>
-        </div>
 
     );
 };
