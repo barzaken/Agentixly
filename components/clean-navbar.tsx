@@ -10,8 +10,8 @@ export function CleanNavbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[9999]  backdrop-blur-2xl border-b border-divide">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="fixed top-0 left-0 px-4 xs:px-0 right-0 z-[9999]  backdrop-blur-2xl border-b border-divide">
+      <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           {/* <div className="flex-shrink-0">

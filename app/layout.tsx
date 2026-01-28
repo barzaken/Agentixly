@@ -7,6 +7,12 @@ import { CleanNavbar } from '@/components/clean-navbar'
 export const metadata: Metadata = {
   title: 'Agentixly - Futuristic AI UI Pack',
   description: 'A clean, futuristic AI-themed UI component library for React and Next.js',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Agentixly',
+  },
+  manifest: '/manifest.json',
 }
 
 export default function RootLayout({
