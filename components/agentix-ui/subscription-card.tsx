@@ -10,7 +10,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { DivideX } from "../divide"
+import { DivideX } from "@/components/agentix-ui/divide"
 import { X, Pause, CheckCircle2, AlertTriangle, Play } from "lucide-react"
 
 type SubscriptionStatus = "active" | "paused" | "cancelled"

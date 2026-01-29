@@ -1,0 +1,13 @@
+{
+  "name": "divide",
+  "type": "registry:ui",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "divide.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\nimport React from \"react\";\n\nexport const DivideX = ({ className }: { className?: string }) => {\n  return <div className={cn(\"bg-divide h-[1px] w-full\", className)} />;\n};\n",
+      "type": "registry:ui"
+    }
+  ]
+}

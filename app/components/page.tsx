@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/container/container"
 import { AICard } from "@/components/ui/ai-card"
-import { DivideX } from "@/components/divide"
+import { DivideX } from "@/components/agentix-ui/divide"
 import SubscriptionCard from "@/components/agentix-ui/subscription-card"
 
 export const metadata = {
