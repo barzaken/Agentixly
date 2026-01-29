@@ -261,7 +261,7 @@ export const Logo = () => {
       {/* <LogoSVG /> */}
       <SVGComponent className="size-10
 text-black dark:text-white" />
-      <span className="text-xl font-medium">Agentix</span>
+      {/* <span className="text-xl font-medium">Agentix</span> */}
     </Link>
   );
 };
