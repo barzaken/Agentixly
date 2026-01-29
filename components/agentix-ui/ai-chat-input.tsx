@@ -208,7 +208,7 @@ export default function SmartAiInput({ onSend, disabled }: SmartAiInputProps) {
               rows={1}
               className={cn(
                 "w-full bg-transparent border-none resize-none focus:ring-0 focus:outline-none px-0 py-0 min-h-[24px] max-h-[280px] custom-scrollbar",
-                "text-[15px] leading-relaxed text-zinc-900 dark:text-zinc-100",
+                "text-[16px] leading-relaxed text-zinc-900 dark:text-zinc-100",
                 "placeholder:text-zinc-500 dark:placeholder:text-zinc-500",
                 !isExpanded && "cursor-text"
               )}
