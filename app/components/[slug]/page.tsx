@@ -3,10 +3,9 @@ import path from "path";
 import { notFound } from "next/navigation";
 
 import { Container } from "@/components/ui/container/container";
-import { IconCard } from "@/components/ui/cards/icon-card";
 import { RegistryActions } from "@/components/registry-actions";
 import { ComponentScroller } from "@/components/component-scroller";
-import ComponentPreview from "@/components/component-preview";
+import { ComponentCodePreview } from "@/components/component-code-preview";
 
 type RegistryFile = {
   path: string;
@@ -100,24 +99,15 @@ export default async function ComponentInstallPage(props: {
           </div>
         </div>
 
-        {/* Right: live preview */}
+        {/* Right: live preview / code */}
         <div className="w-full">
-          {/* <ComponentPreview slug={slug} /> */}
-            <IconCard className="bg-background/60">
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="font-mono uppercase tracking-[0.2em]">
-                    Preview
-                  </span>
-                  <span className="rounded-full border border-divide bg-muted/40 px-3 py-1">
-                    components/agentix-ui/{registry.files[0]?.path}
-                  </span>
-                </div>
-                <div className="rounded-lg border border-divide bg-muted/40 p-4 md:p-6 max-h-[480px] overflow-hidden">
-                <ComponentPreview slug={slug} />
-                </div>
-              </div>
-            </IconCard>
+          {registry.files[0] && (
+            <ComponentCodePreview
+              slug={slug}
+              filePath={registry.files[0].path}
+              code={registry.files[0].content}
+            />
+          )}
         </div>
       </div>
     </Container>

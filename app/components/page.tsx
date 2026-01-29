@@ -1,33 +1,53 @@
+import fs from "fs"
+import path from "path"
 import Link from "next/link"
 
 import { Container } from "@/components/ui/container/container"
 import { DivideX } from "@/components/agentix-ui/divide"
-import SubscriptionCard from "@/components/agentix-ui/subscription-card"
+import ComponentPreview from "@/components/component-preview"
 
 export const metadata = {
   title: "Components - Agentix",
   description: "Browse our collection of AI-themed UI components",
 }
 
-const components = [
-  {
-    slug: "subscription-card",
-    name: "Subscription Card",
-    description:
-      "An animated subscription card with expandable details, status indicators, and rich motion.",
-    tech: ["Framer Motion", "shadcn/ui", "Tailwind CSS"],
-    preview: <SubscriptionCard />,
-  },
-  {
-    slug: "divide",
-    name: "DivideX",
-    description: "A subtle divider component used to separate sections of your UI.",
-    tech: ["Tailwind CSS"],
-    preview: <DivideX />,
-  },
-] as const
+type RegistryFile = {
+  path: string
+  content: string
+  type: string
+}
 
-export default function ComponentsPage() {
+type RegistryItem = {
+  slug: string
+  name: string
+  type: string
+  dependencies: string[]
+  registryDependencies: string[]
+  files: RegistryFile[]
+}
+
+async function getAllRegistryItems(): Promise<RegistryItem[]> {
+  const dir = path.join(process.cwd(), "public/registry")
+  const entries = await fs.promises.readdir(dir)
+
+  const items: RegistryItem[] = []
+
+  for (const file of entries) {
+    if (!file.endsWith(".json")) continue
+
+    const slug = file.replace(".json", "")
+    const raw = await fs.promises.readFile(path.join(dir, file), "utf8")
+    const json = JSON.parse(raw) as Omit<RegistryItem, "slug">
+
+    items.push({ ...json, slug })
+  }
+
+  return items.sort((a, b) => a.name.localeCompare(b.name))
+}
+
+export default async function ComponentsPage() {
+  const components = await getAllRegistryItems()
+
   return (
     <>
       <DivideX />
@@ -43,7 +63,15 @@ export default function ComponentsPage() {
 
         <section className="mb-16">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {components.map((component) => (
+            {components.map((component) => {
+              const tech = Array.from(
+                new Set([
+                  ...(component.dependencies ?? []),
+                  ...(component.registryDependencies ?? []),
+                ]),
+              )
+
+              return (
               <Link
                 key={component.slug}
                 href={`/components/${component.slug}`}
@@ -57,27 +85,30 @@ export default function ComponentsPage() {
                     </span>
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    {component.description}
+                    AI-themed UI component from the Agentix registry.
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {component.tech.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                    {tech.length > 0
+                      ? tech.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground"
+                          >
+                            {tag}
+                          </span>
+                        ))
+                      : null}
                   </div>
                 </div>
 
                 <div className="rounded-lg border border-dashed border-divide bg-muted/40 p-3 group-hover:border-foreground/30">
                   <div className="pointer-events-none">
-                    {component.preview}
+                    <ComponentPreview slug={component.slug} />
                   </div>
                 </div>
               </Link>
-            ))}
+              )
+            })}
           </div>
         </section>
       </Container>

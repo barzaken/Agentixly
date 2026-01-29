@@ -56,7 +56,7 @@ export function RegistryActions({
   return (
     <div
       className={cn(
-        "flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3",
+        "flex flex-row gap-2 items-center sm:gap-3",
         className,
       )}
     >
@@ -66,7 +66,7 @@ export function RegistryActions({
         onClick={() => handleCopy("npx")}
       >
         <TerminalSquare className="mr-2 h-3.5 w-3.5" />
-        {label("npx", "Copy npx command")}
+        {label("npx", "npx command")}
       </Button>
       <Button
         variant="outline"
@@ -75,7 +75,7 @@ export function RegistryActions({
         onClick={() => handleCopy("prompt")}
       >
         <Sparkles className="mr-2 h-3.5 w-3.5" />
-        {label("prompt", "Copy AI prompt")}
+        {label("prompt", "AI prompt")}
       </Button>
       <Button
         variant="ghost"
@@ -84,7 +84,7 @@ export function RegistryActions({
         onClick={() => handleCopy("code")}
       >
         <FileCode2 className="mr-2 h-3.5 w-3.5" />
-        {label("code", "Copy full code")}
+        {label("code", "source code")}
       </Button>
     </div>
   );

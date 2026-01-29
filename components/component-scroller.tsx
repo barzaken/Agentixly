@@ -9,6 +9,9 @@ type ComponentScrollerProps = {
   currentSlug: string;
 };
 
+const NAVIGATION_COOLDOWN_MS = 900;
+const NAVIGATION_STORAGE_KEY = "agentix-components-last-nav";
+
 export function ComponentScroller({
   slugs,
   currentSlug,
@@ -18,41 +21,69 @@ export function ComponentScroller({
   const touchStartY = useRef<number | null>(null);
   const touchStartTime = useRef<number | null>(null);
 
+  const isModalOpen = () => {
+    if (typeof document === "undefined") return false;
+    return document.body.dataset.agentixModalOpen === "true";
+  };
+
+  const canNavigate = () => {
+    if (typeof window === "undefined") return false;
+
+    const last = window.sessionStorage.getItem(NAVIGATION_STORAGE_KEY);
+    const lastTime = last ? parseInt(last, 10) : 0;
+    const now = Date.now();
+
+    return now - lastTime > NAVIGATION_COOLDOWN_MS;
+  };
+
+  const recordNavigation = () => {
+    if (typeof window === "undefined") return;
+    window.sessionStorage.setItem(
+      NAVIGATION_STORAGE_KEY,
+      Date.now().toString(),
+    );
+  };
+
   const index = slugs.indexOf(currentSlug);
   const hasPrev = index > 0;
   const hasNext = index >= 0 && index < slugs.length - 1;
 
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
-      if (isThrottled) return;
+      if (isThrottled || !canNavigate() || isModalOpen()) return;
 
       const threshold = 40;
       if (event.deltaY > threshold && hasNext) {
         setIsThrottled(true);
+        recordNavigation();
         router.push(`/components/${slugs[index + 1]}`);
         setTimeout(() => setIsThrottled(false), 800);
       } else if (event.deltaY < -threshold && hasPrev) {
         setIsThrottled(true);
+        recordNavigation();
         router.push(`/components/${slugs[index - 1]}`);
         setTimeout(() => setIsThrottled(false), 800);
       }
     };
 
     const handleKey = (event: KeyboardEvent) => {
-      if (isThrottled) return;
-      if (event.key === "ArrowDown" && hasNext) {
+      if (isThrottled || !canNavigate() || isModalOpen()) return;
+      if ((event.key === "ArrowDown" || event.key === "PageDown") && hasNext) {
         setIsThrottled(true);
+        recordNavigation();
         router.push(`/components/${slugs[index + 1]}`);
         setTimeout(() => setIsThrottled(false), 800);
       }
-      if (event.key === "ArrowUp" && hasPrev) {
+      if ((event.key === "ArrowUp" || event.key === "PageUp") && hasPrev) {
         setIsThrottled(true);
+        recordNavigation();
         router.push(`/components/${slugs[index - 1]}`);
         setTimeout(() => setIsThrottled(false), 800);
       }
     };
 
     const handleTouchStart = (event: TouchEvent) => {
+      if (isModalOpen()) return;
       if (event.touches.length === 1) {
         touchStartY.current = event.touches[0].clientY;
         touchStartTime.current = Date.now();
@@ -60,6 +91,7 @@ export function ComponentScroller({
     };
 
     const handleTouchMove = (event: TouchEvent) => {
+      if (isModalOpen()) return;
       // Prevent default scrolling if we're going to handle the swipe
       if (touchStartY.current !== null && event.touches.length === 1) {
         const currentY = event.touches[0].clientY;
@@ -73,7 +105,13 @@ export function ComponentScroller({
     };
 
     const handleTouchEnd = (event: TouchEvent) => {
-      if (isThrottled || touchStartY.current === null || touchStartTime.current === null) {
+      if (
+        isThrottled ||
+        !canNavigate() ||
+        isModalOpen() ||
+        touchStartY.current === null ||
+        touchStartTime.current === null
+      ) {
         touchStartY.current = null;
         touchStartTime.current = null;
         return;
@@ -95,12 +133,14 @@ export function ComponentScroller({
           // Swipe down (scroll up) - go to next component
           if (deltaY > 0 && hasNext) {
             setIsThrottled(true);
+            recordNavigation();
             router.push(`/components/${slugs[index + 1]}`);
             setTimeout(() => setIsThrottled(false), 800);
           }
           // Swipe up (scroll down) - go to previous component
           else if (deltaY < 0 && hasPrev) {
             setIsThrottled(true);
+            recordNavigation();
             router.push(`/components/${slugs[index - 1]}`);
             setTimeout(() => setIsThrottled(false), 800);
           }
@@ -129,28 +169,69 @@ export function ComponentScroller({
   if (index === -1) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-y-0 right-3 z-40 hidden flex-col items-center justify-center gap-3 text-[10px] text-muted-foreground md:flex">
-      <div className="flex flex-col items-center gap-1 rounded-full border border-divide bg-background/80 px-2 py-2 shadow-sm">
-        {slugs.map((slug, i) => (
-          <button
-            key={slug}
-            type="button"
-            onClick={() => router.push(`/components/${slug}`)}
-            className={cn(
-              "h-1.5 w-1.5 rounded-full border border-divide transition",
-              i === index
-                ? "bg-foreground"
-                : "bg-muted hover:bg-foreground/40 pointer-events-auto",
-            )}
+    <>
+      {/* Desktop: vertical line indicator */}
+      <div className="pointer-events-none fixed inset-y-0 right-6 z-40 hidden flex-col items-center justify-center gap-3 text-[10px] text-muted-foreground md:flex">
+        <div className="relative flex flex-col items-center gap-2 rounded-full border border-divide bg-background/80 px-3 py-4 shadow-sm">
+          {/* Vertical rail */}
+          <div className="pointer-events-none absolute inset-y-3 left-1/2 w-px -translate-x-1/2 bg-divide/70" />
+
+          {slugs.map((slug, i) => (
+            <button
+              key={slug}
+              type="button"
+              onClick={() => router.push(`/components/${slug}`)}
+              className={cn(
+                "relative flex h-3 w-3 items-center justify-center rounded-full border border-divide bg-background/80 transition pointer-events-auto",
+                i === index
+                  ? "rotate-45 border-foreground/80 bg-foreground/90 text-background shadow-[0_0_12px_rgba(255,255,255,0.35)]"
+                  : "bg-muted/40 hover:bg-foreground/30 hover:border-foreground/40",
+              )}
+              aria-label={`Go to component ${i + 1}`}
+            >
+              {/* Inner node */}
+              <span
+                className={cn(
+                  "block h-1.5 w-1.5 rounded-full bg-foreground/50 transition-transform",
+                  i === index ? "scale-90 bg-background" : "scale-75",
+                )}
+              />
+            </button>
+          ))}
+        </div>
+        <div className="rounded-full border border-divide bg-background/80 px-2 py-1">
+          <span className="font-mono">
+            {index + 1}/{slugs.length}
+          </span>
+        </div>
+      </div>
+
+      {/* Mobile: bottom progress line indicator */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-4 z-40 flex items-center justify-center gap-3 text-[10px] text-muted-foreground md:hidden">
+        <div className="relative h-px w-32 overflow-hidden rounded-full bg-divide/60">
+          {/* Filled progress */}
+          <div
+            className="absolute inset-y-0 left-0 bg-foreground/80 transition-all duration-300"
+            style={{ width: `${((index + 1) / slugs.length) * 100}%` }}
           />
-        ))}
+
+          {/* Glowing node */}
+          <div
+            className="pointer-events-none absolute -top-[3px] h-2 w-2 -translate-x-1/2 rounded-full bg-background"
+            style={{
+              left: `${((index + 1) / slugs.length) * 100}%`,
+            }}
+          >
+            <div className="h-full w-full rounded-full bg-foreground shadow-[0_0_16px_rgba(255,255,255,0.55)]" />
+          </div>
+        </div>
+        <div className="rounded-full border border-divide bg-background/80 px-2 py-1">
+          <span className="font-mono">
+            {index + 1}/{slugs.length}
+          </span>
+        </div>
       </div>
-      <div className="rounded-full border border-divide bg-background/80 px-2 py-1">
-        <span className="font-mono">
-          {index + 1}/{slugs.length}
-        </span>
-      </div>
-    </div>
+    </>
   );
 }
 

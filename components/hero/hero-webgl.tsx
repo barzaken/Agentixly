@@ -8,7 +8,7 @@ import { Container } from "@/components/ui/container/container"
 import { Badge } from "@/components/badge"
 import { useIsMobile } from "@/hooks/use-is-mobile"
 import { cn } from "@/lib/utils"
-import { IconCard, Icons as CornerIcons } from "@/components/ui/cards/icon-card"
+import { IconCard } from "@/components/ui/cards/icon-card"
 import { Button } from "../ui/container/button"
 import MeshGradient from "../mesh-gradient"
 import { PixelatedCanvas } from "../pixelated-canvas"
@@ -20,6 +20,7 @@ import {
     DialogDescription,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { IconModal } from "@/components/ui/icon-modal"
 import { toast } from "sonner"
 import Link from "next/link"
 const TEXTUREMAP = { src: "https://i.postimg.cc/XYwvXN8D/img-4.png" }
@@ -261,8 +262,7 @@ export const Hero3DWebGL = () => {
                                 </Button>
                             </DialogTrigger>
                             <DialogContent className="px-4">
-                                <div className="relative px-6 py-6 md:px-8 md:py-6 border border-divide bg-background/95 backdrop-blur-xl bg-white dark:bg-neutral-900">
-                                    <CornerIcons />
+                                <IconModal>
                                     <DialogHeader className="mb-4">
                                         <DialogTitle className="text-base md:text-lg">
                                             Join the Agentix waitlist
@@ -300,7 +300,7 @@ export const Hero3DWebGL = () => {
                                             {isSubmitting ? "Joining..." : "Join waitlist"}
                                         </Button>
                                     </form>
-                                </div>
+                                </IconModal>
                             </DialogContent>
                         </Dialog>
                         <Button
