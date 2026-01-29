@@ -28,7 +28,7 @@ files.forEach(file => {
   // יצירת אובייקט ה-JSON
   const registryItem = {
     name: componentName,
-    type: "components:ui",
+    type: "registry:ui",
     dependencies: dependencies,
     registryDependencies: registryDependencies,
     files: [

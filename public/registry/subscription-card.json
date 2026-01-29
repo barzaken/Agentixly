@@ -1,6 +1,6 @@
 {
   "name": "subscription-card",
-  "type": "components:ui",
+  "type": "registry:ui",
   "dependencies": [
     "motion/react",
     "lucide-react"
