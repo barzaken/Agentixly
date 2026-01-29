@@ -70,7 +70,7 @@ export function ComponentCodePreview({
               className="rounded-full border border-divide bg-muted/40 px-3 py-1 cursor-pointer hover:bg-muted/70 transition-colors"
             >
               <span className="font-mono text-[11px]">
-                components/agentix-ui/{filePath}
+                agentix-ui/{filePath}
               </span>
             </button>
           </div>
