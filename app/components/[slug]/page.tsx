@@ -68,9 +68,9 @@ export default async function ComponentInstallPage(props: {
     .join("\n\n");
 
   return (
-    <Container className="relative px-4 py-20 md:py-16 min-h-[calc(100vh-5rem)] md:flex md:items-center">
+    <Container className="px-4 py-20 md:py-16 min-h-[calc(100vh-0rem)] md:flex md:items-center">
       <ComponentScroller slugs={slugs} currentSlug={slug} />
-      <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1.6fr)] items-center">
+      <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1.6fr)] items-start">
         {/* Left: meta + actions */}
         <div className="space-y-6">
           <div className="space-y-3">
@@ -79,12 +79,12 @@ export default async function ComponentInstallPage(props: {
               Agentix component
             </p> */}
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
-              {registry.name}
+              {registry.name} 
             </h1>
-            <p className="text-sm md:text-base text-muted-foreground max-w-md">
+            {/* <p className="text-sm md:text-base text-muted-foreground max-w-md">
               Install this component into your project using the shadcn CLI or
               let your AI assistant handle it with a pre-filled prompt.
-            </p>
+            </p> */}
           </div>
 
           <div className="space-y-3">
@@ -100,7 +100,7 @@ export default async function ComponentInstallPage(props: {
         </div>
 
         {/* Right: live preview / code */}
-        <div className="w-full">
+        <div className="w-full min-h-full">
           {registry.files[0] && (
             <ComponentCodePreview
               slug={slug}
