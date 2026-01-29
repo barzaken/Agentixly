@@ -91,7 +91,7 @@ const SubscriptionCard = () => {
                                     className="flex-1"
                                 >
                                     <CardDescription className="text-sm text-muted-foreground ">
-                                        Using Daily for 12 days
+                                        Started 03/2025
                                     </CardDescription>
                                 </motion.div>
                                 <motion.div
