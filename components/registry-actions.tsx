@@ -65,7 +65,7 @@ export function RegistryActions({
         className="w-full sm:w-auto font-mono text-xs"
         onClick={() => handleCopy("npx")}
       >
-        <TerminalSquare className="mr-2 h-3.5 w-3.5" />
+        <TerminalSquare className="mr-1 h-3.5 w-3.5" />
         {label("npx", "npx command")}
       </Button>
       <Button
@@ -74,7 +74,7 @@ export function RegistryActions({
         className="w-full sm:w-auto font-mono text-xs"
         onClick={() => handleCopy("prompt")}
       >
-        <Sparkles className="mr-2 h-3.5 w-3.5" />
+        <Sparkles className="mr-1 h-3.5 w-3.5" />
         {label("prompt", "AI prompt")}
       </Button>
       <Button
@@ -83,7 +83,7 @@ export function RegistryActions({
         className="w-full sm:w-auto font-mono text-xs"
         onClick={() => handleCopy("code")}
       >
-        <FileCode2 className="mr-2 h-3.5 w-3.5" />
+        <FileCode2 className="mr-1 h-3.5 w-3.5" />
         {label("code", "source code")}
       </Button>
     </div>
