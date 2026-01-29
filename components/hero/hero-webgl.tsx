@@ -239,7 +239,7 @@ export const Hero3DWebGL = () => {
                         {/* </div> */}
                     </IconCard>
                 </div>
-                <div className="px-2 h-full border-divide w-full relative">
+                <div className="px-2 h-full border-[0.5px] border-divide w-full relative">
                     <Canvas
                         flat
                         gl={{

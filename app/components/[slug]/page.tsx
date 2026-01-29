@@ -79,7 +79,7 @@ export default async function ComponentInstallPage(props: {
               Agentix component
             </p> */}
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
-              " {registry.name} "
+              {registry.name}
             </h1>
             <p className="text-sm md:text-base text-muted-foreground max-w-md">
               Install this component into your project using the shadcn CLI or
