@@ -21,6 +21,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "sonner"
+import Link from "next/link"
 const TEXTUREMAP = { src: "https://i.postimg.cc/XYwvXN8D/img-4.png" }
 const DEPTHMAP = { src: "https://i.postimg.cc/2SHKQh2q/raw-4.webp" }
 
@@ -303,6 +304,8 @@ export const Hero3DWebGL = () => {
                             </DialogContent>
                         </Dialog>
                         <Button
+                            as={Link}
+                            href="/components"
                             variant="secondary"
                             className="whitespace-nowrap bg-stripes px-3 py-1.5 sm:px-4 sm:py-2"
                         >

@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react"
 import { Logo } from "@/components/logo"
 import { ModeToggle } from "./mode-toggle"
 import { AnimatePresence, motion } from "motion/react"
+import Link from "next/link"
 export function CleanNavbar() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -22,7 +23,7 @@ export function CleanNavbar() {
           <Logo />
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               <a
                 href="/#technology"
@@ -37,12 +38,14 @@ export function CleanNavbar() {
                 FAQ
               </a>
             </div>
-          </div>
+          </div> */}
 
           {/* Desktop CTA + Theme toggle */}
           <div className="hidden md:flex items-center gap-4">
             <ModeToggle />
-            <Button className="">Join Waitlist</Button>
+            <Button as={Link} href="/components" className="">
+              Browse components
+            </Button>
           </div>
 
           {/* Mobile theme toggle + menu button */}
@@ -72,7 +75,7 @@ export function CleanNavbar() {
               transition={{ duration: 0.22, ease: "easeOut" }}
             >
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <a
+                {/* <a
                   href="/#technology"
                   className="block px-3 py-2 font-geist  hover:text-red-500 transition-colors duration-200"
                   onClick={() => setIsOpen(false)}
@@ -92,10 +95,14 @@ export function CleanNavbar() {
                   onClick={() => setIsOpen(false)}
                 >
                   FAQ
-                </a>
+                </a> */}
                 <div className="px-3 py-2 flex items-center justify-between gap-3">
-                  <Button className="flex-1 hover:bg-red-600 text-white font-geist border-0">
-                    Join Waitlist
+                  <Button
+                    as={Link}
+                    href="/components"
+                    className="flex-1 hover:bg-red-600 text-white font-geist border-0"
+                  >
+                    Browse components
                   </Button>
                 </div>
               </div>

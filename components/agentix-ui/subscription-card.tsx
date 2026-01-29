@@ -10,8 +10,11 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { DivideX } from "@/components/agentix-ui/divide"
 import { X, Pause, CheckCircle2, AlertTriangle, Play } from "lucide-react"
+
+const DivideX = ({ className }: { className?: string }) => {
+    return <div className="bg-divide h-[1px] w-full" />;
+};
 
 type SubscriptionStatus = "active" | "paused" | "cancelled"
 
@@ -111,6 +114,7 @@ const SubscriptionCard = () => {
                                     <Button
                                         variant="destructive"
                                         size="sm"
+                                        className="text-white"
                                         onClick={(e) => {
                                             e.stopPropagation()
                                             setStatus("cancelled")

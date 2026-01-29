@@ -6,7 +6,7 @@ import { SubHeading } from "@/components/subheading";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/container/button";
 import { Badge } from "@/components/badge";
-import  Link from "next/link";
+import Link from "next/link";
 
 export const Hero = () => {
   return (
@@ -23,9 +23,9 @@ export const Hero = () => {
       </SubHeading>
 
       <div className="mt-6 flex items-center gap-4">
-            <Button as={Link} href="/sign-up">
-            Start building
-            </Button>
+        <Button as={Link} href="/components">
+          Browse components
+        </Button>
         <Button variant="secondary" as={Link} href="/pricing">
           View pricing
         </Button>
