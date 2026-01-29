@@ -70,7 +70,7 @@ export default async function ComponentInstallPage(props: {
   return (
     <Container className="px-4 py-20 md:py-16 min-h-[calc(100vh-0rem)] md:flex md:items-center">
       <ComponentScroller slugs={slugs} currentSlug={slug} />
-      <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1.6fr)] items-start">
+      <div className="grid w-full  justify-center gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1.6fr)] items-start">
         {/* Left: meta + actions */}
         <div className="space-y-6">
           <div className="space-y-3">
