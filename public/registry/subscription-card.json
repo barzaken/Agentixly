@@ -2,10 +2,11 @@
   "name": "subscription-card",
   "type": "registry:ui",
   "dependencies": [
+    "motion/react",
     "lucide-react"
   ],
   "registryDependencies": [
-    "button"
+    "divide"
   ],
   "files": [
     {
