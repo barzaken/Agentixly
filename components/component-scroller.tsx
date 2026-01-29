@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,8 @@ export function ComponentScroller({
 }: ComponentScrollerProps) {
   const router = useRouter();
   const [isThrottled, setIsThrottled] = useState(false);
+  const touchStartY = useRef<number | null>(null);
+  const touchStartTime = useRef<number | null>(null);
 
   const index = slugs.indexOf(currentSlug);
   const hasPrev = index > 0;
@@ -50,11 +52,77 @@ export function ComponentScroller({
       }
     };
 
+    const handleTouchStart = (event: TouchEvent) => {
+      if (event.touches.length === 1) {
+        touchStartY.current = event.touches[0].clientY;
+        touchStartTime.current = Date.now();
+      }
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      // Prevent default scrolling if we're going to handle the swipe
+      if (touchStartY.current !== null && event.touches.length === 1) {
+        const currentY = event.touches[0].clientY;
+        const deltaY = currentY - touchStartY.current;
+        
+        // If the swipe is significant, prevent default scrolling
+        if (Math.abs(deltaY) > 10) {
+          event.preventDefault();
+        }
+      }
+    };
+
+    const handleTouchEnd = (event: TouchEvent) => {
+      if (isThrottled || touchStartY.current === null || touchStartTime.current === null) {
+        touchStartY.current = null;
+        touchStartTime.current = null;
+        return;
+      }
+
+      if (event.changedTouches.length === 1) {
+        const touchEndY = event.changedTouches[0].clientY;
+        const touchEndTime = Date.now();
+        const deltaY = touchEndY - touchStartY.current;
+        const deltaTime = touchEndTime - touchStartTime.current;
+        
+        // Minimum swipe distance (in pixels)
+        const minSwipeDistance = 50;
+        // Maximum swipe time (in milliseconds) to be considered a swipe
+        const maxSwipeTime = 300;
+        
+        // Check if it's a valid swipe gesture
+        if (Math.abs(deltaY) >= minSwipeDistance && deltaTime <= maxSwipeTime) {
+          // Swipe down (scroll up) - go to next component
+          if (deltaY > 0 && hasNext) {
+            setIsThrottled(true);
+            router.push(`/components/${slugs[index + 1]}`);
+            setTimeout(() => setIsThrottled(false), 800);
+          }
+          // Swipe up (scroll down) - go to previous component
+          else if (deltaY < 0 && hasPrev) {
+            setIsThrottled(true);
+            router.push(`/components/${slugs[index - 1]}`);
+            setTimeout(() => setIsThrottled(false), 800);
+          }
+        }
+      }
+
+      touchStartY.current = null;
+      touchStartTime.current = null;
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: true });
     window.addEventListener("keydown", handleKey);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+    
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKey);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [hasNext, hasPrev, index, isThrottled, router, slugs]);
 
