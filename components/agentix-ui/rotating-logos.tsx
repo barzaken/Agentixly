@@ -57,8 +57,10 @@ export const logos = [
     },
   ];
   
-
-
+  const DivideX = ({ className }: { className?: string }) => {
+    return <div className="bg-divide h-[1px] w-full" />;
+  };
+  
 export const LogoCloud = () => {
   // Track which logos are currently displayed (indices)
   const [displayedIndices, setDisplayedIndices] = useState<number[]>(() =>
@@ -94,6 +96,8 @@ export const LogoCloud = () => {
   }, [displayedIndices, logos]);
 
   return (
+    <>
+    <DivideX />
     <Container className="border-divide border-x">
       <h2 className="py-8 text-center font-mono text-sm tracking-tight text-neutral-500 uppercase dark:text-gray-300">
         Trusted by Developers from
@@ -155,5 +159,7 @@ export const LogoCloud = () => {
         })}
       </div>
     </Container>
+    <DivideX />
+    </>
   );
 };

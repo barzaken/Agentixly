@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 import { IconCard } from "@/components/ui/cards/icon-card";
 import ComponentPreview from "@/components/component-preview";
@@ -27,6 +28,15 @@ export function ComponentCodePreview({
 }: ComponentCodePreviewProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [shakeKey, setShakeKey] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShakeKey((prev) => prev + 1);
+    }, 4000); // Shake every 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleOpenDialog = () => {
     setDialogOpen(true);
@@ -64,15 +74,23 @@ export function ComponentCodePreview({
             <span className="font-mono uppercase tracking-[0.2em]">
               Preview
             </span>
-            <button
+            <motion.button
+              key={shakeKey}
               type="button"
               onClick={handleOpenDialog}
               className="rounded-full border border-divide bg-muted/40 px-3 py-1 cursor-pointer hover:bg-muted/70 transition-colors"
+              animate={{
+                x: [0, -1, 1, -1, 1, 0],
+              }}
+              transition={{
+                duration: 0.5,
+                ease: "easeInOut",
+              }}
             >
               <span className="font-mono text-[11px]">
                 agentix-ui/{filePath}
               </span>
-            </button>
+            </motion.button>
           </div>
           <div className="rounded-lg border border-divide bg-muted/40 p-4 md:p-6">
             <div className="max-h-[480px] overflow-hidden">
@@ -90,9 +108,9 @@ export function ComponentCodePreview({
                 <span className="font-mono uppercase tracking-[0.2em] text-muted-foreground">
                   Code preview
                 </span>
-                <span className="font-mono text-[11px] text-muted-foreground">
+                {/* <span className="font-mono text-[11px] text-muted-foreground">
                   components/agentix-ui/{filePath}
-                </span>
+                </span> */}
               </DialogTitle>
             </DialogHeader>
 

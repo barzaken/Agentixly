@@ -74,10 +74,10 @@ export default async function ComponentInstallPage(props: {
         {/* Left: meta + actions */}
         <div className="space-y-6">
           <div className="space-y-3">
-            <p className="inline-flex items-center gap-2 rounded-full border border-divide bg-muted/50 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            {/* <p className="inline-flex items-center gap-2 rounded-full border border-divide bg-muted/50 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
               Agentix component
-            </p>
+            </p> */}
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
               {registry.name}
             </h1>
