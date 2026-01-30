@@ -324,7 +324,7 @@ export const Logo = () => {
   return (
     <Link href="/" className="flex items-center">
       {/* <LogoSVG /> */}
-      <SVGComponent className="size-8
+      <SVGComponent className="size-6 sm:size-8
 text-black dark:text-white dark:invert" />
       {/* <span className="text-xl font-medium">Agentix</span> */}
     </Link>

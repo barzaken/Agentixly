@@ -51,7 +51,7 @@ const MobileNav = ({ items }: { items: { title: string; href: string }[] }) => {
       <Logo />
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="shadow-aceternity flex size-6 flex-col items-center justify-center rounded-md"
+        className="shadow-agentix flex size-6 flex-col items-center justify-center rounded-md"
         aria-label="Toggle menu"
       >
         <Menu className="size-4 shrink-0 text-gray-600" />
@@ -74,7 +74,7 @@ const MobileNav = ({ items }: { items: { title: string; href: string }[] }) => {
               <Logo />
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="shadow-aceternity flex size-6 flex-col items-center justify-center rounded-md"
+                className="shadow-agentix flex size-6 flex-col items-center justify-center rounded-md"
                 aria-label="Toggle menu"
               >
                 <X className="size-4 shrink-0 text-gray-600" />
@@ -163,7 +163,7 @@ const FloatingNav = ({
   return (
     <motion.div
       style={{ y }}
-      className="shadow-aceternity fixed inset-x-0 top-0 z-50 mx-auto hidden max-w-[calc(80rem-4rem)] items-center justify-between bg-white/80 px-2 py-2 backdrop-blur-sm md:flex xl:rounded-2xl dark:bg-neutral-900/80 dark:shadow-[0px_2px_0px_0px_var(--color-neutral-800),0px_-2px_0px_0px_var(--color-neutral-800)]"
+      className="shadow-agentix fixed inset-x-0 top-0 z-50 mx-auto hidden max-w-[calc(80rem-4rem)] items-center justify-between bg-white/80 px-2 py-2 backdrop-blur-sm md:flex xl:rounded-2xl dark:bg-neutral-900/80 dark:shadow-[0px_2px_0px_0px_var(--color-neutral-800),0px_-2px_0px_0px_var(--color-neutral-800)]"
     >
       <Logo />
       <div className="flex items-center gap-10">
