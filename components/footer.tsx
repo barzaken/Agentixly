@@ -91,6 +91,20 @@ export const Footer = () => {
                         AI UI components for AI Apps
                     </SubHeading>
                     <Button as={Link} href="/components" className="mt-4 mb-8 lg:mb-0">Browse components</Button>
+                    <div className="mt-6">
+                        <Link 
+                            href="https://x.com/agentix_ui" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-block"
+                        >
+                            <img 
+                                src="https://cdn.brandfetch.io/idS5WhqBbM/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1768324401335" 
+                                alt="Follow us on X" 
+                                className="h-8 w-8 transition-opacity hover:opacity-80"
+                            />
+                        </Link>
+                    </div>
                 </div>
                 {/* <div className="col-span-1 mb-4 flex flex-col gap-2 md:col-span-1 md:mb-0">
                     <p className="text-sm font-medium text-gray-600">Product</p>

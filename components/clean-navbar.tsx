@@ -11,9 +11,9 @@ export function CleanNavbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 left-0 px-4 xs:px-0 right-0 z-40  backdrop-blur-2xl sm:borderb border-divide">
+    <nav className="fixed top-0 left-0 px-4 xs:px-0 right-0 z-40  backdrop-blur-2xl sm:border-b border-divide">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14 ">
           {/* Logo */}
           {/* <div className="flex-shrink-0">
             <h1 className="font-orbitron text-xl font-bold text-white">
@@ -43,8 +43,13 @@ export function CleanNavbar() {
           {/* Desktop CTA + Theme toggle */}
           <div className="hidden md:flex items-center gap-4">
             <ModeToggle />
-            <Button as={Link} href="/components" className="">
-              Browse components
+            <Button
+              as={Link}
+              href="/components"
+              variant="secondary"
+              className="whitespace-nowrap bg-stripes px-3 py-1.5 sm:px-4 sm:py-2"
+            >
+              View Components
             </Button>
           </div>
 
@@ -97,13 +102,14 @@ export function CleanNavbar() {
                   FAQ
                 </a> */}
                 <div className="px-3 py-2 flex items-center justify-between gap-3">
-                  <Button
-                    as={Link}
-                    href="/components"
-                    className="flex-1 hover:bg-red-600 text-white font-geist border-0"
-                  >
-                    Browse components
-                  </Button>
+                <Button
+                            as={Link}
+                            href="/components"
+                            variant="secondary"
+                            className="whitespace-nowrap bg-stripes px-3 py-1.5 sm:px-4 sm:py-2 flex-1"
+                        >
+                            View Components
+                        </Button>
                 </div>
               </div>
             </motion.div>

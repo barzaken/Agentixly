@@ -207,8 +207,6 @@ export const Hero3DWebGL = () => {
             <div className="relative flex flex-col items-center justify-center h-full w-full">
                 <div className="relative z-30 items-center w-full  flex justify-center flex-col z-0  px-2">
                     <IconCard className="uppercase w-full max-w-3xl mx-auto text-center bg-background/90 flex flex-col items-center justify-center">
-                        {/* <Badge text="Waiting List is open" /> */}
-                        {/* <div className="mt-6 md:mt-8"> */}
                         <div className="text-3xl md:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-orbitron">
                             <div className="flex justify-center space-x-2 lg:space-x-6 overflow-hidden text-black dark:text-white">
                                 {titleWords.map((word, index) => (
@@ -236,7 +234,6 @@ export const Hero3DWebGL = () => {
                                 {subtitle}
                             </div>
                         </div>
-                        {/* </div> */}
                     </IconCard>
                 </div>
                 <div className="px-2 h-[50%] w-full relative">
@@ -249,7 +246,7 @@ export const Hero3DWebGL = () => {
                         }}
                         camera={{ position: [0, 0, 1] }}
                         style={{ background: "transparent" }}
-                        className="z-10 relative  border-[0.5px] border-b max-w-3xl mx-auto border-divide"
+                        className="z-10 relative  border-[0.5px] border-t-0 max-w-3xl mx-auto border-divide"
                     >
                         <Scene isMobile={isMobile} />
                         
