@@ -325,7 +325,7 @@ export const Logo = () => {
     <Link href="/" className="flex items-center">
       {/* <LogoSVG /> */}
       <SVGComponent className="size-8
-text-black dark:text-white dark:invert" />
+text-black dark:text-white dark:text-white" />
       {/* <span className="text-xl font-medium">Agentix</span> */}
     </Link>
   );
