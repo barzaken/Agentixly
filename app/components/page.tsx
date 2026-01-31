@@ -50,8 +50,8 @@ export default async function ComponentsPage() {
 
   return (
     <>
-      <DivideX />
-      <Container className="py-16 px-4">
+      {/* <DivideX /> */}
+      <Container className="py-22 px-4">
         <div className="mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Components</h1>
           <p className="text-muted-foreground text-lg max-w-2xl">

@@ -25,7 +25,6 @@ export function CleanNavbar() {
 
           {/* Desktop CTA + Theme toggle */}
           <div className="hidden md:flex items-center gap-4 ml-auto">
-            <ModeToggle />
             {isComponentsPage ? (
               <div className="w-64">
                 <CommandMenu compact />
@@ -39,6 +38,8 @@ export function CleanNavbar() {
                 View Components
               </Button>
             )}
+                        <ModeToggle />
+
           </div>
 
           {/* Mobile: Logo | CommandMenu (centered) | Theme toggle + menu button */}
@@ -55,7 +56,7 @@ export function CleanNavbar() {
             )}
             <div className={`flex items-center gap-3 ${isComponentsPage ? 'flex-shrink-0' : 'ml-auto'}`}>
               <ModeToggle />
-              <button
+              {!isComponentsPage && <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-white hover:text-red-500 transition-colors duration-200"
               >
@@ -64,7 +65,7 @@ export function CleanNavbar() {
                 ) : (
                   <Menu className="size-4 shrink-0 text-gray-600" />
                 )}
-              </button>
+              </button>}
             </div>
           </div>
         </div>
