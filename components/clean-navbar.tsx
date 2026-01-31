@@ -1,71 +1,71 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/container/button"
+import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { Logo } from "@/components/logo"
 import { ModeToggle } from "./mode-toggle"
 import { AnimatePresence, motion } from "motion/react"
 import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import { CommandMenu } from "./command-menu"
 export function CleanNavbar() {
   const [isOpen, setIsOpen] = useState(false)
-
+  const pathname = usePathname()
+  const isComponentsPage = pathname?.startsWith("/components")
+  const router = useRouter()
   return (
     <nav className="fixed top-0 left-0 px-4 xs:px-0 right-0 z-40  backdrop-blur-2xl border-b border-divide">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between h-14 ">
-          {/* Logo */}
-          {/* <div className="flex-shrink-0">
-            <h1 className="font-orbitron text-xl font-bold text-white">
-              Neural<span className="text-red-500">Link</span>
-            </h1>
-          </div> */}
-          <Logo />
-
-          {/* Desktop Navigation */}
-          {/* <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              <a
-                href="/#technology"
-                className="font-geist  hover:text-red-500 transition-colors duration-200"
-              >
-                Technology
-              </a>
-              <a href="/#safety" className="font-geist hover:text-red-500 transition-colors duration-200">
-                Safety
-              </a>
-              <a href="/#faq" className="font-geist hover:text-red-500 transition-colors duration-200">
-                FAQ
-              </a>
-            </div>
-          </div> */}
-
-          {/* Desktop CTA + Theme toggle */}
-          <div className="hidden md:flex items-center gap-4">
-            <ModeToggle />
-            <Button
-              as={Link}
-              href="/components"
-              variant="secondary"
-              className="whitespace-nowrap bg-stripes px-3 py-1.5 sm:px-4 sm:py-2"
-            >
-              View Components
-            </Button>
+        <div className="flex items-center h-12">
+          {/* Logo - Desktop */}
+          <div className="hidden md:block flex-shrink-0">
+            <Logo />
           </div>
 
-          {/* Mobile theme toggle + menu button */}
-          <div className="md:hidden flex items-center gap-3">
+          {/* Desktop CTA + Theme toggle */}
+          <div className="hidden md:flex items-center gap-4 ml-auto">
             <ModeToggle />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white hover:text-red-500 transition-colors duration-200"
-            >
-              {isOpen ? (
-                <X className="size-4 shrink-0 text-gray-600" />
-              ) : (
-                <Menu className="size-4 shrink-0 text-gray-600" />
-              )}
-            </button>
+            {isComponentsPage ? (
+              <div className="w-64">
+                <CommandMenu compact />
+              </div>
+            ) : (
+              <Button
+                onClick={() => router.push("/components")}
+                variant="secondary"
+                size="sm"
+              >
+                View Components
+              </Button>
+            )}
+          </div>
+
+          {/* Mobile: Logo | CommandMenu (centered) | Theme toggle + menu button */}
+          <div className="md:hidden flex items-center w-full">
+            <div className="flex-shrink-0">
+              <Logo />
+            </div>
+            {isComponentsPage && (
+              <div className="flex-1 flex justify-center px-2">
+                <div className="w-full max-w-1/2">
+                  <CommandMenu compact />
+                </div>
+              </div>
+            )}
+            <div className={`flex items-center gap-3 ${isComponentsPage ? 'flex-shrink-0' : 'ml-auto'}`}>
+              <ModeToggle />
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-white hover:text-red-500 transition-colors duration-200"
+              >
+                {isOpen ? (
+                  <X className="size-4 shrink-0 text-gray-600" />
+                ) : (
+                  <Menu className="size-4 shrink-0 text-gray-600" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -101,16 +101,17 @@ export function CleanNavbar() {
                 >
                   FAQ
                 </a> */}
-                <div className="px-3 py-2 flex items-center justify-between gap-3">
-                <Button
-                            as={Link}
-                            href="/components"
-                            variant="secondary"
-                            className="whitespace-nowrap bg-stripes px-3 py-1.5 sm:px-4 sm:py-2 flex-1"
-                        >
-                            View Components
-                        </Button>
-                </div>
+                {!isComponentsPage && (
+                  <div className="px-3 py-2 flex items-center justify-between gap-3">
+                    <Button
+                      onClick={() => router.push("/components")}
+                      variant="secondary"
+                      size="sm"
+                    >
+                      View Components
+                    </Button>
+                  </div>
+                )}
               </div>
             </motion.div>
           )}

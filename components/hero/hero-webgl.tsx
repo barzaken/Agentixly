@@ -10,8 +10,6 @@ import { useIsMobile } from "@/hooks/use-is-mobile"
 import { cn } from "@/lib/utils"
 import { IconCard } from "@/components/ui/cards/icon-card"
 import { Button } from "../ui/container/button"
-import MeshGradient from "../mesh-gradient"
-import { PixelatedCanvas } from "../pixelated-canvas"
 import {
     Dialog,
     DialogContent,

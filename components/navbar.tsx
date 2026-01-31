@@ -15,6 +15,7 @@ import {
 import { ModeToggle } from "@/components/mode-toggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/container/button";
+import { CommandMenu } from "./command-menu";
 const items = [
   {
     title: "Pricing",

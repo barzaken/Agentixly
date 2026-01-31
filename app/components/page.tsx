@@ -80,13 +80,11 @@ export default async function ComponentsPage() {
                 <div className="mb-4">
                   <h2 className="text-xl font-semibold mb-1 flex items-center justify-between">
                     {component.name}
-                    <span className="text-xs rounded-full border border-divide px-2 py-0.5 font-mono uppercase tracking-wide text-muted-foreground group-hover:border-foreground/40">
+                    <span className="text-xs px-2 py-0.5 font-mono uppercase tracking-wide text-muted-foreground group-hover:border-foreground/40">
                       Preview
                     </span>
                   </h2>
-                  <p className="text-sm text-muted-foreground">
-                    AI-themed UI component from the Agentix registry.
-                  </p>
+
                   <div className="mt-3 flex flex-wrap gap-2">
                     {tech.length > 0
                       ? tech.map((tag) => (
