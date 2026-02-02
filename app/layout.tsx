@@ -8,6 +8,7 @@ import { SonnerProvider } from '@/components/sonner-provider'
 import { CommandMenuProvider } from '@/components/command-menu-provider'
 import { CommandDialog } from '@/components/command-dialog'
 import { Orbitron } from "next/font/google"; 
+import { Analytics } from "@vercel/analytics/next"
 
 
 const orbitron = Orbitron({
@@ -48,6 +49,7 @@ export default function RootLayout({
           {children}
           <SonnerProvider />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
