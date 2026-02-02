@@ -22,8 +22,12 @@ export function ComponentScroller({
     (state) => state.setCurrentComponentSlug,
   );
   const [isThrottled, setIsThrottled] = useState(false);
+  const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
   const touchStartTime = useRef<number | null>(null);
+  const ignoreGesture = useRef(false);
+
+  const EDGE_THRESHOLD = 40; // px from left edge reserved for browser back
 
   // Sync current slug with store
   useEffect(() => {
@@ -98,13 +102,18 @@ export function ComponentScroller({
     const handleTouchStart = (event: TouchEvent) => {
       if (isModalOpen()) return;
       if (event.touches.length === 1) {
-        touchStartY.current = event.touches[0].clientY;
+        const touch = event.touches[0];
+        touchStartY.current = touch.clientY;
+        touchStartX.current = touch.clientX;
         touchStartTime.current = Date.now();
+
+        // If swipe starts near the left edge, let the browser handle it (back gesture)
+        ignoreGesture.current = touchStartX.current < EDGE_THRESHOLD;
       }
     };
 
     const handleTouchMove = (event: TouchEvent) => {
-      if (isModalOpen()) return;
+      if (isModalOpen() || ignoreGesture.current) return;
       // Prevent default scrolling if we're going to handle the swipe
       if (touchStartY.current !== null && event.touches.length === 1) {
         const currentY = event.touches[0].clientY;
@@ -118,6 +127,15 @@ export function ComponentScroller({
     };
 
     const handleTouchEnd = (event: TouchEvent) => {
+      if (ignoreGesture.current) {
+        // This was likely a browser back swipe – reset and bail
+        touchStartY.current = null;
+        touchStartX.current = null;
+        touchStartTime.current = null;
+        ignoreGesture.current = false;
+        return;
+      }
+
       if (
         isThrottled ||
         !canNavigate() ||
@@ -126,15 +144,27 @@ export function ComponentScroller({
         touchStartTime.current === null
       ) {
         touchStartY.current = null;
+        touchStartX.current = null;
         touchStartTime.current = null;
         return;
       }
 
       if (event.changedTouches.length === 1) {
+        const touchEndX = event.changedTouches[0].clientX;
         const touchEndY = event.changedTouches[0].clientY;
         const touchEndTime = Date.now();
+        const deltaX =
+          touchEndX - (touchStartX.current ?? touchEndX);
         const deltaY = touchEndY - touchStartY.current;
         const deltaTime = touchEndTime - touchStartTime.current;
+
+        // Only treat as our gesture if vertical component dominates
+        if (Math.abs(deltaY) < Math.abs(deltaX)) {
+          touchStartY.current = null;
+          touchStartX.current = null;
+          touchStartTime.current = null;
+          return;
+        }
         
         // Minimum swipe distance (in pixels)
         const minSwipeDistance = 50;
@@ -163,6 +193,7 @@ export function ComponentScroller({
       }
 
       touchStartY.current = null;
+      touchStartX.current = null;
       touchStartTime.current = null;
     };
 
