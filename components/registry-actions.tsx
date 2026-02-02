@@ -66,17 +66,18 @@ export function RegistryActions({
         className,
       )}
     >
+
       <Button
         size="sm"
-        className="flex-shrink-0 p-0 rounded-lg overflow-hidden"
-        onClick={handleV0Open}
+        className="flex-shrink-0 font-mono text-xs w-fit px-0"
+        onClick={() => handleV0Open()}
       >
         <img
           src="https://v0.app/chat-static/button.svg"
           alt="Open in v0"
           // width={99}
           // height={32}
-          className="h-8 w-full bg-black "
+          className="dark:bg-black"
         />
       </Button>
       <Button
