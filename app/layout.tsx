@@ -5,6 +5,8 @@ import { interDisplay } from '@/fonts/inter-display/inter'
 import { dmMono } from '@/fonts/dm-mono'
 import { CleanNavbar } from '@/components/clean-navbar'
 import { SonnerProvider } from '@/components/sonner-provider'
+import { CommandMenuProvider } from '@/components/command-menu-provider'
+import { CommandDialog } from '@/components/command-dialog'
 export const metadata: Metadata = {
   title: 'Agentix - The AI UI Pack',
   description: 'A clean, futuristic AI-themed UI component library for React and Next.js',
@@ -30,6 +32,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <CommandMenuProvider />
+          <CommandDialog />
           <CleanNavbar />
           {children}
           <SonnerProvider />

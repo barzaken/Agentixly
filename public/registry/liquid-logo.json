@@ -1,0 +1,15 @@
+{
+  "name": "liquid-logo",
+  "type": "registry:ui",
+  "dependencies": [
+    "liquid-image"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "liquid-logo.tsx",
+      "content": "\"use client\"\nimport { LiquidImage } from 'liquid-image'\n\nexport const LiquidLogo = () => {\n  return (\n    <LiquidImage src=\"/agentix.svg\" invert showControls />\n  )\n}",
+      "type": "registry:ui"
+    }
+  ]
+}
