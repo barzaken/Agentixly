@@ -7,6 +7,15 @@ import { CleanNavbar } from '@/components/clean-navbar'
 import { SonnerProvider } from '@/components/sonner-provider'
 import { CommandMenuProvider } from '@/components/command-menu-provider'
 import { CommandDialog } from '@/components/command-dialog'
+import { Orbitron } from "next/font/google"; 
+
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  variable: "--font-orbitron", 
+  weight: ["400", "500", "600", "700", "800", "900"], 
+});
+
 export const metadata: Metadata = {
   title: 'Agentix - The AI UI Pack',
   description: 'A clean, futuristic AI-themed UI component library for React and Next.js',
@@ -18,6 +27,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 }
 
+
 export default function RootLayout({
   children,
 }: {
@@ -25,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className="no-scrollbar">
-      <body className={`${interDisplay.variable} ${dmMono.variable} font-primary`}>
+      <body className={`${interDisplay.variable} ${dmMono.variable} ${orbitron.variable} font-primary`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

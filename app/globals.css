@@ -25,6 +25,10 @@
     font-family: var(--font-mono);
   }
 
+  .font-orbitron {
+    font-family: var(--font-orbitron), sans-serif;
+  }
+
 }
 
 @theme {
