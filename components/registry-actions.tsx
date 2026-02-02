@@ -22,21 +22,34 @@ export function RegistryActions({
 
   const npxCommand = `npx shadcn@latest add https://agentixui.com/registry/${slug}.json`;
 
+  // const aiPrompt = [
+  //   "You are my senior TypeScript & Next.js assistant.",
+  //   "Install the following Agentix UI component into my project using the shadcn CLI.",
+  //   "",
+  //   `Component: ${name}`,
+  //   `Registry URL: https://agentixui.com/registry/${slug}.json`,
+  //   "",
+  //   "Steps:",
+  //   "1. Run the npx command to download the component.",
+  //   "2. Ensure all dependencies are installed.",
+  //   "3. Wire the component into a new route and show a minimal working example.",
+  //   "",
+  //   "Return the exact commands and code changes you would make.",
+  // ].join("\n");
   const aiPrompt = [
-    "You are my senior TypeScript & Next.js assistant.",
-    "Install the following Agentix UI component into my project using the shadcn CLI.",
+    "Role: Expert Component Integrator for Next.js & Shadcn UI.",
+    "Objective: Flawlessly install the specified component and resolve ALL dependencies.",
     "",
-    `Component: ${name}`,
-    `Registry URL: https://agentixui.com/registry/${slug}.json`,
+    `Target Component: ${name}`,
+    `Registry Source: https://agentixui.com/registry/${slug}.json`,
     "",
-    "Steps:",
-    "1. Run the npx command to download the component.",
-    "2. Ensure all dependencies are installed.",
-    "3. Wire the component into a new route and show a minimal working example.",
+    "Critical Instructions:",
+    "1. INSTALLATION: Generate the specific `npx` command to add the component from the provided Registry URL.",
+    "2. DEPENDENCY CHECK: Analyze common dependencies for this type of UI component (e.g., framer-motion, lucide-react, clsx, tailwind-merge). Provide a separate install command for these if they are likely required.",
+    "3. VERIFICATION: Generate a minimal, self-contained example file (Demo) to prove the component renders correctly without errors.",
     "",
-    "Return the exact commands and code changes you would make.",
+    "Output format: Terminal commands first, followed by the code implementation.",
   ].join("\n");
-
   const v0Url = `https://v0.app/chat/api/open?title=${encodeURIComponent(name)}&prompt=${encodeURIComponent(aiPrompt)}&url=${encodeURIComponent(`https://agentixui.com/registry/${slug}.json`)}`;
 
   const handleCopy = async (type: "npx" | "prompt" | "code") => {
