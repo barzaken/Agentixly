@@ -1,9 +1,9 @@
- "use client";
+"use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { TerminalSquare, Sparkles, FileCode2 } from "lucide-react";
+import { TerminalSquare, Sparkles, Code2 } from "lucide-react";
 
 type RegistryActionsProps = {
   slug: string;
@@ -37,6 +37,8 @@ export function RegistryActions({
     "Return the exact commands and code changes you would make.",
   ].join("\n");
 
+  const v0Url = `https://v0.app/chat/api/open?title=${encodeURIComponent(name)}&prompt=${encodeURIComponent(aiPrompt)}&url=${encodeURIComponent(`https://agentixui.com/registry/${slug}.json`)}`;
+
   const handleCopy = async (type: "npx" | "prompt" | "code") => {
     const text =
       type === "npx" ? npxCommand : type === "prompt" ? aiPrompt : code;
@@ -53,38 +55,55 @@ export function RegistryActions({
   const label = (type: "npx" | "prompt" | "code", fallback: string) =>
     copied === type ? "Copied" : fallback;
 
+  const handleV0Open = () => {
+    window.open(v0Url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div
       className={cn(
-        "flex flex-row gap-2 items-center sm:gap-3",
+        "flex-1 flex flex-row flex-nowrap gap-2 items-center overflow-x-auto",
         className,
       )}
     >
       <Button
         size="sm"
-        className="w-full sm:w-auto font-mono text-xs"
+        className="flex-shrink-0 p-0 rounded-lg overflow-hidden"
+        onClick={handleV0Open}
+      >
+        <img
+          src="https://v0.app/chat-static/button.svg"
+          alt="Open in v0"
+          // width={99}
+          // height={32}
+          className="h-8 w-full bg-black "
+        />
+      </Button>
+      <Button
+        size="sm"
+        className="flex-shrink-0 font-mono text-xs"
         onClick={() => handleCopy("npx")}
       >
         <TerminalSquare className="mr-1 h-3.5 w-3.5" />
-        {label("npx", "npx command")}
+        {label("npx", "CLI")}
       </Button>
       <Button
         variant="outline"
         size="sm"
-        className="w-full sm:w-auto font-mono text-xs"
+        className="flex-shrink-0 font-mono text-xs"
         onClick={() => handleCopy("prompt")}
       >
         <Sparkles className="mr-1 h-3.5 w-3.5" />
-        {label("prompt", "AI prompt")}
+        {label("prompt", "AI")}
       </Button>
       <Button
-        variant="ghost"
+        variant="outline"
         size="sm"
-        className="w-full sm:w-auto font-mono text-xs"
+        className="flex-shrink-0 font-mono text-xs"
         onClick={() => handleCopy("code")}
       >
-        <FileCode2 className="mr-1 h-3.5 w-3.5" />
-        {label("code", "source code")}
+        <Code2 className="mr-1 h-3.5 w-3.5" />
+        {label("code", "code")}
       </Button>
     </div>
   );

@@ -8,20 +8,7 @@ interface CommandMenuProps {
 }
 
 export function CommandMenu({ compact = false }: CommandMenuProps) {
-    const { setCommandMenuOpen, toggleCommandMenu } = useAppStore()
-
-    // Toggle the menu when ⌘K is pressed
-    React.useEffect(() => {
-        const down = (e: KeyboardEvent) => {
-            if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-                e.preventDefault()
-                toggleCommandMenu()
-            }
-        }
-
-        document.addEventListener('keydown', down)
-        return () => document.removeEventListener('keydown', down)
-    }, [toggleCommandMenu])
+    const { setCommandMenuOpen } = useAppStore()
     
     const button = (
         <button

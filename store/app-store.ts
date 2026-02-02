@@ -14,6 +14,10 @@ interface AppStore {
   setCommandMenuOpen: (open: boolean) => void
   toggleCommandMenu: () => void
   
+  // Current component state (shared across the app)
+  currentComponentSlug: string | null
+  setCurrentComponentSlug: (slug: string | null) => void
+  
   // Components data (shared across the app)
   components: Component[]
   componentsLoading: boolean
@@ -27,6 +31,10 @@ export const useAppStore = create<AppStore>((set, get) => ({
   commandMenuOpen: false,
   setCommandMenuOpen: (open) => set({ commandMenuOpen: open }),
   toggleCommandMenu: () => set((state) => ({ commandMenuOpen: !state.commandMenuOpen })),
+  
+  // Current component state
+  currentComponentSlug: null,
+  setCurrentComponentSlug: (slug) => set({ currentComponentSlug: slug }),
   
   // Components data
   components: [],

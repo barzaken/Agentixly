@@ -8,7 +8,7 @@
   "files": [
     {
       "path": "liquid-logo.tsx",
-      "content": "\"use client\"\nimport { LiquidImage } from 'liquid-image'\n\nexport const LiquidLogo = () => {\n  return (\n    <LiquidImage src=\"/agentix.svg\" invert showControls />\n  )\n}",
+      "content": "\"use client\"\nimport { LiquidImage } from 'liquid-image'\nexport const LiquidLogo = () => {\n    return (\n        <div className=\"flex items-center justify-center\">\n            <LiquidImage width={128} height={128} src={'/symbol-lvlzai.png'} invert/>\n        </div>\n    )\n}",
       "type": "registry:ui"
     }
   ]

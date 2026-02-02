@@ -92,9 +92,11 @@ export function ComponentCodePreview({
                             </span>
                         </motion.button>
                     </div>
-                    <div className="flex-1 flex items-center justify-center w-full  bg-muted/20 p-4 rounded-lg border border-divide md:p-6 overflow-y-scroll pt-48">
-                        <div className="flex-1">
-                            <ComponentPreview slug={slug} />
+                    <div className="flex-1 w-full bg-muted/20 p-4 rounded-lg border border-divide md:p-6 overflow-y-auto min-h-0">
+                        <div className="min-h-full flex items-center justify-center">
+                            <div className="w-full">
+                                <ComponentPreview slug={slug} />
+                            </div>
                         </div>
                     </div>
                 </div>

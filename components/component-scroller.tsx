@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/store/app-store";
 
 type ComponentScrollerProps = {
   slugs: string[];
@@ -17,9 +18,15 @@ export function ComponentScroller({
   currentSlug,
 }: ComponentScrollerProps) {
   const router = useRouter();
+  const setCurrentComponentSlug = useAppStore((state) => state.setCurrentComponentSlug);
   const [isThrottled, setIsThrottled] = useState(false);
   const touchStartY = useRef<number | null>(null);
   const touchStartTime = useRef<number | null>(null);
+
+  // Sync current slug with store
+  useEffect(() => {
+    setCurrentComponentSlug(currentSlug);
+  }, [currentSlug, setCurrentComponentSlug]);
 
   const isModalOpen = () => {
     if (typeof document === "undefined") return false;
@@ -56,12 +63,16 @@ export function ComponentScroller({
       if (event.deltaY > threshold && hasNext) {
         setIsThrottled(true);
         recordNavigation();
-        router.push(`/components/${slugs[index + 1]}`);
+        const nextSlug = slugs[index + 1];
+        setCurrentComponentSlug(nextSlug);
+        router.push(`/components/${nextSlug}`);
         setTimeout(() => setIsThrottled(false), 800);
       } else if (event.deltaY < -threshold && hasPrev) {
         setIsThrottled(true);
         recordNavigation();
-        router.push(`/components/${slugs[index - 1]}`);
+        const prevSlug = slugs[index - 1];
+        setCurrentComponentSlug(prevSlug);
+        router.push(`/components/${prevSlug}`);
         setTimeout(() => setIsThrottled(false), 800);
       }
     };
@@ -71,13 +82,17 @@ export function ComponentScroller({
       if ((event.key === "ArrowDown" || event.key === "PageDown") && hasNext) {
         setIsThrottled(true);
         recordNavigation();
-        router.push(`/components/${slugs[index + 1]}`);
+        const nextSlug = slugs[index + 1];
+        setCurrentComponentSlug(nextSlug);
+        router.push(`/components/${nextSlug}`);
         setTimeout(() => setIsThrottled(false), 800);
       }
       if ((event.key === "ArrowUp" || event.key === "PageUp") && hasPrev) {
         setIsThrottled(true);
         recordNavigation();
-        router.push(`/components/${slugs[index - 1]}`);
+        const prevSlug = slugs[index - 1];
+        setCurrentComponentSlug(prevSlug);
+        router.push(`/components/${prevSlug}`);
         setTimeout(() => setIsThrottled(false), 800);
       }
     };
@@ -134,14 +149,18 @@ export function ComponentScroller({
           if (deltaY > 0 && hasNext) {
             setIsThrottled(true);
             recordNavigation();
-            router.push(`/components/${slugs[index + 1]}`);
+            const nextSlug = slugs[index + 1];
+            setCurrentComponentSlug(nextSlug);
+            router.push(`/components/${nextSlug}`);
             setTimeout(() => setIsThrottled(false), 800);
           }
           // Swipe up (scroll down) - go to previous component
           else if (deltaY < 0 && hasPrev) {
             setIsThrottled(true);
             recordNavigation();
-            router.push(`/components/${slugs[index - 1]}`);
+            const prevSlug = slugs[index - 1];
+            setCurrentComponentSlug(prevSlug);
+            router.push(`/components/${prevSlug}`);
             setTimeout(() => setIsThrottled(false), 800);
           }
         }
@@ -180,7 +199,10 @@ export function ComponentScroller({
             <button
               key={slug}
               type="button"
-              onClick={() => router.push(`/components/${slug}`)}
+              onClick={() => {
+                setCurrentComponentSlug(slug);
+                router.push(`/components/${slug}`);
+              }}
               className={cn(
                 "relative flex h-3 w-3 items-center justify-center rounded-full border border-divide bg-background/80 transition pointer-events-auto",
                 i === index

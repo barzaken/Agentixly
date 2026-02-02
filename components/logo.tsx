@@ -28,7 +28,7 @@ export const Logo = () => {
 text-black dark:text-white dark:text-white" /> */}
       <LiquidImage liquid={1} speed={0.5} src="/agentix-ui.png" width={24} height={24}  />
       {/* <LiquidLogo /> */}
-      {/* <span className="text-xl font-medium">Agentix</span> */}
+      {/* <span className="text-xl font-medium ml-2">Agentix</span> */}
     </Link>
   );
 };
