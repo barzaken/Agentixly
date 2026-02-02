@@ -18,7 +18,9 @@ export function ComponentScroller({
   currentSlug,
 }: ComponentScrollerProps) {
   const router = useRouter();
-  const setCurrentComponentSlug = useAppStore((state) => state.setCurrentComponentSlug);
+  const setCurrentComponentSlug = useAppStore(
+    (state) => state.setCurrentComponentSlug,
+  );
   const [isThrottled, setIsThrottled] = useState(false);
   const touchStartY = useRef<number | null>(null);
   const touchStartTime = useRef<number | null>(null);
@@ -64,14 +66,12 @@ export function ComponentScroller({
         setIsThrottled(true);
         recordNavigation();
         const nextSlug = slugs[index + 1];
-        setCurrentComponentSlug(nextSlug);
         router.push(`/components/${nextSlug}`);
         setTimeout(() => setIsThrottled(false), 800);
       } else if (event.deltaY < -threshold && hasPrev) {
         setIsThrottled(true);
         recordNavigation();
         const prevSlug = slugs[index - 1];
-        setCurrentComponentSlug(prevSlug);
         router.push(`/components/${prevSlug}`);
         setTimeout(() => setIsThrottled(false), 800);
       }
@@ -83,7 +83,6 @@ export function ComponentScroller({
         setIsThrottled(true);
         recordNavigation();
         const nextSlug = slugs[index + 1];
-        setCurrentComponentSlug(nextSlug);
         router.push(`/components/${nextSlug}`);
         setTimeout(() => setIsThrottled(false), 800);
       }
@@ -91,7 +90,6 @@ export function ComponentScroller({
         setIsThrottled(true);
         recordNavigation();
         const prevSlug = slugs[index - 1];
-        setCurrentComponentSlug(prevSlug);
         router.push(`/components/${prevSlug}`);
         setTimeout(() => setIsThrottled(false), 800);
       }
@@ -150,7 +148,6 @@ export function ComponentScroller({
             setIsThrottled(true);
             recordNavigation();
             const nextSlug = slugs[index + 1];
-            setCurrentComponentSlug(nextSlug);
             router.push(`/components/${nextSlug}`);
             setTimeout(() => setIsThrottled(false), 800);
           }
@@ -159,7 +156,6 @@ export function ComponentScroller({
             setIsThrottled(true);
             recordNavigation();
             const prevSlug = slugs[index - 1];
-            setCurrentComponentSlug(prevSlug);
             router.push(`/components/${prevSlug}`);
             setTimeout(() => setIsThrottled(false), 800);
           }
@@ -200,7 +196,6 @@ export function ComponentScroller({
               key={slug}
               type="button"
               onClick={() => {
-                setCurrentComponentSlug(slug);
                 router.push(`/components/${slug}`);
               }}
               className={cn(
