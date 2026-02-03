@@ -201,8 +201,8 @@ export const Hero3DWebGL = () => {
     }
 
     return (
-        <Container className="border-divide flex flex-col items-center justify-center border-x px-4 pb-10 md:pb-20 h-svh relative">
-            <div className="relative flex flex-col items-center justify-center h-full w-full">
+        <Container className="border-divide flex flex-col items-center justify-center border-x px-4 sm:h-svh sm:pb-0 py-20 relative">
+            <div className="relative flex flex-col items-center justify-start h-full w-full">
                 <div className="relative z-30 items-center w-full  flex justify-center flex-col z-0  px-2">
                     <IconCard className="w-full max-w-3xl mx-auto text-center bg-background/90 flex flex-col items-center justify-center">
                         <div className="text-3xl md:text-5xl xl:text-6xl 2xl:text-7xl font-semibold font-orbitron">
