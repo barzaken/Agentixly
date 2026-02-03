@@ -10,7 +10,7 @@ import { Heading } from "@/components/heading"
 import { SubHeading } from "@/components/subheading";
 import { Footer } from "@/components/footer";
 import { getSEOTags } from "@/lib/seo"
-
+import { useAppStore } from "@/store/app-store"
 export const metadata = getSEOTags({
   title: "All components | Agentix UI",
   description: "Browse our collection of AI-themed UI components",

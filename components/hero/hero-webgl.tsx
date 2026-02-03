@@ -21,6 +21,7 @@ import {
 import { IconModal } from "@/components/ui/icon-modal"
 import { toast } from "sonner"
 import Link from "next/link"
+import { LiquidImage } from "liquid-image"
 const TEXTUREMAP = { src: "https://i.postimg.cc/XYwvXN8D/img-4.png" }
 const DEPTHMAP = { src: "https://i.postimg.cc/2SHKQh2q/raw-4.webp" }
 
@@ -235,7 +236,11 @@ export const Hero3DWebGL = () => {
                     </IconCard>
                 </div>
                 <div className="px-2 flex-1 max-h-[70%]  w-full relative ">
-                    <Canvas
+                    <div className="border border-divide border-t-0 border-[0.5px] max-w-3xl mx-auto flex items-center justify-center">
+
+                        <LiquidImage src={"/agentix-logo.png"} />
+                    </div>
+                    {/* <Canvas
                         flat
                         gl={{
                             antialias: true,
@@ -248,7 +253,7 @@ export const Hero3DWebGL = () => {
                     >
                         <Scene isMobile={isMobile} />
                         
-                    </Canvas>
+                    </Canvas> */}
                     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 flex gap-2 z-10 text-xs sm:text-sm">
                         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                             <DialogTrigger asChild>
