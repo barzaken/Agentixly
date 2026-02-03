@@ -201,8 +201,8 @@ export const Hero3DWebGL = () => {
     }
 
     return (
-        <Container className="border-divide flex flex-col items-center justify-center border-x px-4 sm:h-svh sm:pb-0 py-20 relative">
-            <div className="relative flex flex-col items-center justify-start h-full w-full">
+        <Container className="border-divide flex flex-col items-center h-svh pt-20 pb-10 border-x  relative px-4 md:px-0">
+            <div className="relative flex flex-col items-center justify-start min-h-full w-full">
                 <div className="relative z-30 items-center w-full  flex justify-center flex-col z-0  px-2">
                     <IconCard className="w-full max-w-3xl mx-auto text-center bg-background/90 flex flex-col items-center justify-center">
                         <div className="text-3xl md:text-5xl xl:text-6xl 2xl:text-7xl font-semibold font-orbitron">
@@ -234,7 +234,7 @@ export const Hero3DWebGL = () => {
                         </div>
                     </IconCard>
                 </div>
-                <div className="px-2 h-[50%] w-full relative">
+                <div className="px-2 flex-1 max-h-[70%]  w-full relative ">
                     <Canvas
                         flat
                         gl={{
@@ -308,7 +308,6 @@ export const Hero3DWebGL = () => {
                         </Button>
                     </div>
                 </div>
-
             </div>
         </Container>
     )
