@@ -12,25 +12,25 @@ import { FlickeringGrid } from "./flickering-grid";
 export const Footer = () => {
     const product = [
         {
-            title: "Agent Builder",
-            href: "#",
+            title: "Components",
+            href: "/components",
         },
         {
-            title: "Simulation",
-            href: "#",
+            title: "Blog",
+            href: "/blog",
         },
-        {
-            title: "Integrations",
-            href: "#",
-        },
-        {
-            title: "Multi Agent",
-            href: "#",
-        },
-        {
-            title: "Workflow API",
-            href: "#",
-        },
+        // {
+        //     title: "Integrations",
+        //     href: "#",
+        // },
+        // {
+        //     title: "Multi Agent",
+        //     href: "#",
+        // },
+        // {
+        //     title: "Workflow API",
+        //     href: "#",
+        // },
     ];
 
     const company = [
@@ -84,8 +84,8 @@ export const Footer = () => {
     ];
     return (
         <Container>
-            <div className="grid grid-cols-1 px-4 py-20 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
-                <div className="mb-6 sm:col-span-2 md:col-span-4 lg:col-span-3">
+            <div className="grid grid-cols-1 px-4 py-20 sm:grid-cols-2 gap-12 ">
+                <div className="mb-6 col-span-1">
                     <Logo />
                     <SubHeading as="p" className="mt-4 max-w-lg text-left">
                         AI UI components for AI Apps
@@ -106,7 +106,7 @@ export const Footer = () => {
                         </Link>
                     </div>
                 </div>
-                {/* <div className="col-span-1 mb-4 flex flex-col gap-2 md:col-span-1 md:mb-0">
+                <div className="col-span-1 flex flex-col gap-2 md:col-span-1 md:mb-0">
                     <p className="text-sm font-medium text-gray-600">Product</p>
                     {product.map((item) => (
                         <Link
@@ -118,47 +118,6 @@ export const Footer = () => {
                         </Link>
                     ))}
                 </div>
-                <div className="col-span-1 mb-4 flex flex-col gap-2 md:col-span-1 md:mb-0">
-                    <p className="text-sm font-medium text-gray-600">Company</p>
-                    {company.map((item) => (
-                        <Link
-                            href={item.href}
-                            key={item.title}
-                            className="text-footer-link my-2 text-sm font-medium"
-                        >
-                            {item.title}
-                        </Link>
-                    ))}
-                </div>
-                <div className="col-span-1 mb-4 flex flex-col gap-2 md:col-span-1 md:mb-0">
-                    <p className="text-sm font-medium text-gray-600">Legal</p>
-                    {legal.map((item) => (
-                        <Link
-                            href={item.href}
-                            key={item.title}
-                            className="text-footer-link my-2 text-sm font-medium"
-                        >
-                            {item.title}
-                        </Link>
-                    ))}
-                </div> */}
-                {/* <div className="col-span-1 mb-4 flex flex-col items-start md:col-span-1 md:mb-0 lg:col-span-2">
-                    <p className="text-footer-link text-sm font-medium">Newsletter</p>
-                    <div className="mt-2 flex w-full items-center rounded-xl border border-gray-300 bg-gray-200 p-1 placeholder-gray-600 dark:border-neutral-700 dark:bg-neutral-800">
-                        <input
-                            type="email"
-                            placeholder="Your email"
-                            className="flex-1 bg-transparent px-2 text-sm outline-none focus:outline-none"
-                        />
-                    </div>
-                    <SubHeading
-                        as="p"
-                        className="mt-4 text-left text-sm md:text-sm lg:text-sm"
-                    >
-                        Get the latest produc
-                        t news and behind the scenes updates.
-                    </SubHeading>
-                </div> */}
             </div>
             <div className="relative h-[200px]">
                 <FlickeringGrid

@@ -7,14 +7,14 @@ import { CleanNavbar } from '@/components/clean-navbar'
 import { SonnerProvider } from '@/components/sonner-provider'
 import { CommandMenuProvider } from '@/components/command-menu-provider'
 import { CommandDialog } from '@/components/command-dialog'
-import { Orbitron } from "next/font/google"; 
+import { Orbitron } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next"
 
 
 const orbitron = Orbitron({
   subsets: ["latin"],
-  variable: "--font-orbitron", 
-  weight: ["400", "500", "600", "700", "800", "900"], 
+  variable: "--font-orbitron",
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -46,7 +46,10 @@ export default function RootLayout({
           <CommandMenuProvider />
           <CommandDialog />
           <CleanNavbar />
-          {children}
+          <main className="antialiased">
+
+            {children}
+          </main>
           <SonnerProvider />
         </ThemeProvider>
         <Analytics />
