@@ -1,5 +1,3 @@
-import fs from "fs"
-import path from "path"
 import Link from "next/link"
 
 import { Container } from "@/components/ui/container/container"
@@ -10,14 +8,14 @@ import { Heading } from "@/components/heading"
 import { SubHeading } from "@/components/subheading";
 import { Footer } from "@/components/footer";
 import { getSEOTags } from "@/lib/seo"
-import { useAppStore } from "@/store/app-store"
+import { Component } from "@/store/app-store"
 export const metadata = getSEOTags({
   title: "All components | Agentix UI",
   description: "Browse our collection of AI-themed UI components",
 })
 
 
-export const GridLayout = ({ components }: { components: RegistryItem[] }) => {
+export const GridLayout = ({ components }: { components: Component[] }) => {
   return (
     <div className="divide-divide grid grid-cols-1 divide-y lg:grid-cols-3 lg:divide-x lg:divide-y-0">
       {components.map((component, index) => (
@@ -42,43 +40,29 @@ export const GridLayout = ({ components }: { components: RegistryItem[] }) => {
   );
 };
 
-type RegistryFile = {
-  path: string
-  content: string
-  type: string
-}
-
-type RegistryItem = {
-  slug: string
-  name: string
-  type: string
-  dependencies: string[]
-  registryDependencies: string[]
-  files: RegistryFile[]
-}
-
-async function getAllRegistryItems(): Promise<RegistryItem[]> {
-  const dir = path.join(process.cwd(), "public/registry")
-  const entries = await fs.promises.readdir(dir)
-
-  const items: RegistryItem[] = []
-
-  for (const file of entries) {
-    if (!file.endsWith(".json")) continue
-
-    const slug = file.replace(".json", "")
-    const raw = await fs.promises.readFile(path.join(dir, file), "utf8")
-    const json = JSON.parse(raw) as Omit<RegistryItem, "slug">
-
-    items.push({ ...json, slug })
+async function getComponentsFromStore(): Promise<Component[]> {
+  // Fetch from the API route (same source the store uses)
+  // For server components, construct the base URL
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL 
+    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+  
+  const response = await fetch(`${baseUrl}/api/components`, {
+    cache: 'no-store',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch components')
   }
-
-  return items.sort((a, b) => a.name.localeCompare(b.name))
+  
+  const components = await response.json() as Component[]
+  return components
 }
 
 export default async function ComponentsPage() {
-  const components = await getAllRegistryItems()
-  // const components = useAppStore((state) => state.components)
+  const components = await getComponentsFromStore()
   return (
     <>
       {/* <DivideX /> */}
