@@ -1,5 +1,4 @@
 "use client"
-import { useEffect } from "react"
 import Link from "next/link"
 
 import { Container } from "@/components/ui/container/container"
@@ -42,15 +41,6 @@ export const GridLayout = ({ components }: { components: Component[] }) => {
 export default function ComponentsPage() {
   const components = useAppStore((state) => state.components)
   const componentsLoading = useAppStore((state) => state.componentsLoading)
-  const fetchComponents = useAppStore((state) => state.fetchComponents)
-
-  useEffect(() => {
-    // Fetch components if they haven't been loaded yet
-    if (components.length === 0 && !componentsLoading) {
-      fetchComponents()
-    }
-  }, [components.length, componentsLoading, fetchComponents])
-
   return (
     <>
       <DivideX />
@@ -61,7 +51,7 @@ export default function ComponentsPage() {
           All components available in the Agentix UI library.
         </SubHeading>
         <div className="border-divide divide-divide mt-10 flex w-full flex-col divide-y border-y">
-          {componentsLoading ? (
+          {componentsLoading || components.length < 1 ? (
             <div className="p-8 text-center text-muted-foreground">
               Loading components...
             </div>

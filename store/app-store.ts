@@ -63,3 +63,9 @@ export const useAppStore = create<AppStore>((set, get) => ({
     }
   },
 }))
+
+// Initialize components fetching when the store is first used in the browser
+if (typeof window !== 'undefined') {
+  // Fire-and-forget; errors are already handled inside fetchComponents
+  useAppStore.getState().fetchComponents()
+}
