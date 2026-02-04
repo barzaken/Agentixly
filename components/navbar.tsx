@@ -18,8 +18,9 @@ import { Button } from "@/components/ui/container/button";
 import { CommandMenu } from "./command-menu";
 const items = [
   {
-    title: "Pricing",
-    href: "/pricing",
+    title: "Components",
+    // href: "/pricing",
+    href: "/components",
   },
   {
     title: "About",

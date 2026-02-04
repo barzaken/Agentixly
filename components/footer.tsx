@@ -33,55 +33,55 @@ export const Footer = () => {
         // },
     ];
 
-    const company = [
-        {
-            title: "Sign In",
-            href: "/sign-in",
-        },
-        {
-            title: "About",
-            href: "/about",
-        },
-        {
-            title: "Contact",
-            href: "/contact",
-        },
-        {
-            title: "Pricing",
-            href: "/pricing",
-        },
-        {
-            title: "Careers",
-            href: "/careers",
-        },
-        {
-            title: "Docs",
-            href: "#",
-        },
-        {
-            title: "Changelog",
-            href: "#",
-        },
-        {
-            title: "Glossary",
-            href: "#",
-        },
-    ];
+    // const company = [
+    //     {
+    //         title: "Sign In",
+    //         href: "/sign-in",
+    //     },
+    //     {
+    //         title: "About",
+    //         href: "/about",
+    //     },
+    //     {
+    //         title: "Contact",
+    //         href: "/contact",
+    //     },
+    //     {
+    //         title: "Pricing",
+    //         href: "/pricing",
+    //     },
+    //     {
+    //         title: "Careers",
+    //         href: "/careers",
+    //     },
+    //     {
+    //         title: "Docs",
+    //         href: "#",
+    //     },
+    //     {
+    //         title: "Changelog",
+    //         href: "#",
+    //     },
+    //     {
+    //         title: "Glossary",
+    //         href: "#",
+    //     },
+    // ];
 
-    const legal = [
-        {
-            title: "Privacy Policy",
-            href: "/privacy-policy",
-        },
-        {
-            title: "Terms of Service",
-            href: "/terms-of-service",
-        },
-        {
-            title: "Cookie Policy",
-            href: "/cookie-policy",
-        },
-    ];
+    // const legal = [
+    //     {
+    //         title: "Privacy Policy",
+    //         href: "/privacy-policy",
+    //     },
+    //     {
+    //         title: "Terms of Service",
+    //         href: "/terms-of-service",
+    //     },
+    //     {
+    //         title: "Cookie Policy",
+    //         href: "/cookie-policy",
+    //     },
+    // ];
     return (
         <Container>
             <div className="grid grid-cols-1 px-4 py-20 sm:grid-cols-2 gap-12 ">

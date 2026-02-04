@@ -27,7 +27,8 @@ export const Security = () => {
           <Button
             className="mt-4 mb-8 inline-block w-full md:w-auto"
             as={Link}
-            href="/pricing"
+            // href="/pricing"
+            href="/components"
           >
             Start for free
           </Button>
