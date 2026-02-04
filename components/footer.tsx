@@ -7,7 +7,7 @@ import { Container } from "./ui/container/container";
 import { Logo } from "./logo";
 import { SubHeading } from "./subheading";
 // import { SendIcon } from "@/src/icons/bento-icons";
-import { FlickeringGrid } from "./flickering-grid";
+// import { FlickeringGrid } from "./flickering-grid";
 
 export const Footer = () => {
     const product = [
@@ -119,7 +119,7 @@ export const Footer = () => {
                     ))}
                 </div>
             </div>
-            <div className="relative h-[200px]">
+            {/* <div className="relative h-[200px]">
                 <FlickeringGrid
                     text={"Agentix"}
                     fontSize={90}
@@ -130,7 +130,7 @@ export const Footer = () => {
                     maxOpacity={0.3}
                     flickerChance={0.1}
                 />
-            </div>
+            </div> */}
 
         </Container>
     );

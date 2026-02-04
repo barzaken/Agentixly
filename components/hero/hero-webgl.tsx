@@ -22,116 +22,117 @@ import { IconModal } from "@/components/ui/icon-modal"
 import { toast } from "sonner"
 import Link from "next/link"
 import { LiquidImage } from "liquid-image"
-const TEXTUREMAP = { src: "https://i.postimg.cc/XYwvXN8D/img-4.png" }
-const DEPTHMAP = { src: "https://i.postimg.cc/2SHKQh2q/raw-4.webp" }
+import PixelBlast from "../pixel-blast"
+// const TEXTUREMAP = { src: "https://i.postimg.cc/XYwvXN8D/img-4.png" }
+// const DEPTHMAP = { src: "https://i.postimg.cc/2SHKQh2q/raw-4.webp" }
 
-const WIDTH = 300
-const HEIGHT = 300
-const Scene = ({ isMobile }: { isMobile: boolean }) => {
-    const [rawMap, depthMap] = useTexture([TEXTUREMAP.src, DEPTHMAP.src])
-    const meshRef = useRef<THREE.Mesh>(null)
+// const WIDTH = 300
+// const HEIGHT = 300
+// const Scene = ({ isMobile }: { isMobile: boolean }) => {
+//     const [rawMap, depthMap] = useTexture([TEXTUREMAP.src, DEPTHMAP.src])
+//     const meshRef = useRef<THREE.Mesh>(null)
 
-    const material = useMemo(() => {
-        const vertexShader = `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `
+//     const material = useMemo(() => {
+//         const vertexShader = `
+//       varying vec2 vUv;
+//       void main() {
+//         vUv = uv;
+//         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+//       }
+//     `
 
-        const fragmentShader = `
-      uniform sampler2D uTexture;
-      uniform sampler2D uDepthMap;
-      uniform vec2 uPointer;
-      uniform float uProgress;
-      uniform float uTime;
-      varying vec2 vUv;
+//         const fragmentShader = `
+//       uniform sampler2D uTexture;
+//       uniform sampler2D uDepthMap;
+//       uniform vec2 uPointer;
+//       uniform float uProgress;
+//       uniform float uTime;
+//       varying vec2 vUv;
 
-      // Simple noise function
-      float random(vec2 st) {
-        return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-      }
+//       // Simple noise function
+//       float random(vec2 st) {
+//         return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+//       }
 
-      float noise(vec2 st) {
-        vec2 i = floor(st);
-        vec2 f = fract(st);
-        float a = random(i);
-        float b = random(i + vec2(1.0, 0.0));
-        float c = random(i + vec2(0.0, 1.0));
-        float d = random(i + vec2(1.0, 1.0));
-        vec2 u = f * f * (3.0 - 2.0 * f);
-        return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-      }
+//       float noise(vec2 st) {
+//         vec2 i = floor(st);
+//         vec2 f = fract(st);
+//         float a = random(i);
+//         float b = random(i + vec2(1.0, 0.0));
+//         float c = random(i + vec2(0.0, 1.0));
+//         float d = random(i + vec2(1.0, 1.0));
+//         vec2 u = f * f * (3.0 - 2.0 * f);
+//         return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+//       }
 
-      void main() {
-        vec2 uv = vUv;
+//       void main() {
+//         vec2 uv = vUv;
         
-        // Depth-based displacement
-        float depth = texture2D(uDepthMap, uv).r;
-        vec2 displacement = depth * uPointer * 0.01;
-        vec2 distortedUv = uv + displacement;
+//         // Depth-based displacement
+//         float depth = texture2D(uDepthMap, uv).r;
+//         vec2 displacement = depth * uPointer * 0.01;
+//         vec2 distortedUv = uv + displacement;
         
-        // Base texture
-        vec4 baseColor = texture2D(uTexture, distortedUv);
+//         // Base texture
+//         vec4 baseColor = texture2D(uTexture, distortedUv);
         
-        // Create scanning effect
-        float aspect = ${WIDTH}.0 / ${HEIGHT}.0;
-        vec2 tUv = vec2(uv.x * aspect, uv.y);
-        vec2 tiling = vec2(120.0);
-        vec2 tiledUv = mod(tUv * tiling, 2.0) - 1.0;
+//         // Create scanning effect
+//         float aspect = ${WIDTH}.0 / ${HEIGHT}.0;
+//         vec2 tUv = vec2(uv.x * aspect, uv.y);
+//         vec2 tiling = vec2(120.0);
+//         vec2 tiledUv = mod(tUv * tiling, 2.0) - 1.0;
         
-        float brightness = noise(tUv * tiling * 0.5);
-        float dist = length(tiledUv);
-        float dot = smoothstep(0.5, 0.49, dist) * brightness;
+//         float brightness = noise(tUv * tiling * 0.5);
+//         float dist = length(tiledUv);
+//         float dot = smoothstep(0.5, 0.49, dist) * brightness;
         
-        // Flow effect based on progress
-        float flow = 1.0 - smoothstep(0.0, 0.02, abs(depth - uProgress));
+//         // Flow effect based on progress
+//         float flow = 1.0 - smoothstep(0.0, 0.02, abs(depth - uProgress));
         
-        // Red scanning overlay
-        vec3 mask = vec3(dot * flow * 10.0, 0.0, 0.0);
+//         // Red scanning overlay
+//         vec3 mask = vec3(dot * flow * 10.0, 0.0, 0.0);
         
-        // Combine effects
-        vec3 final = baseColor.rgb + mask;
+//         // Combine effects
+//         vec3 final = baseColor.rgb + mask;
         
-        // Use alpha from texture to maintain transparency
-        gl_FragColor = vec4(final, baseColor.a);
-      }
-    `
+//         // Use alpha from texture to maintain transparency
+//         gl_FragColor = vec4(final, baseColor.a);
+//       }
+//     `
 
-        return new THREE.ShaderMaterial({
-            uniforms: {
-                uTexture: { value: rawMap },
-                uDepthMap: { value: depthMap },
-                uPointer: { value: new THREE.Vector2(0, 0) },
-                uProgress: { value: 0 },
-                uTime: { value: 0 },
-            },
-            vertexShader,
-            fragmentShader,
-            transparent: true,
-            depthWrite: false,
-        })
-    }, [rawMap, depthMap])
+//         return new THREE.ShaderMaterial({
+//             uniforms: {
+//                 uTexture: { value: rawMap },
+//                 uDepthMap: { value: depthMap },
+//                 uPointer: { value: new THREE.Vector2(0, 0) },
+//                 uProgress: { value: 0 },
+//                 uTime: { value: 0 },
+//             },
+//             vertexShader,
+//             fragmentShader,
+//             transparent: true,
+//             depthWrite: false,
+//         })
+//     }, [rawMap, depthMap])
 
-    const [w, h] = useAspect(WIDTH, HEIGHT)
+//     const [w, h] = useAspect(WIDTH, HEIGHT)
 
-    useFrame(({ clock, pointer }) => {
-        if (material.uniforms) {
-            material.uniforms.uProgress.value = Math.sin(clock.getElapsedTime() * 0.5) * 0.5 + 0.5
-            material.uniforms.uPointer.value = pointer
-            material.uniforms.uTime.value = clock.getElapsedTime()
-        }
-    })
+//     useFrame(({ clock, pointer }) => {
+//         if (material.uniforms) {
+//             material.uniforms.uProgress.value = Math.sin(clock.getElapsedTime() * 0.5) * 0.5 + 0.5
+//             material.uniforms.uPointer.value = pointer
+//             material.uniforms.uTime.value = clock.getElapsedTime()
+//         }
+//     })
 
-    // const scaleFactor = 0.3
-    const scaleFactor = isMobile ? 0.5 : 0.3
-    return (
-        <mesh ref={meshRef} scale={[w * scaleFactor, h * scaleFactor, 1]} material={material}>
-            <planeGeometry />
-        </mesh>
-    )
-}
+//     // const scaleFactor = 0.3
+//     const scaleFactor = isMobile ? 0.5 : 0.3
+//     return (
+//         <mesh ref={meshRef} scale={[w * scaleFactor, h * scaleFactor, 1]} material={material}>
+//             <planeGeometry />
+//         </mesh>
+//     )
+// }
 
 export const Hero3DWebGL = () => {
     const isMobile = useIsMobile()
@@ -235,10 +236,89 @@ export const Hero3DWebGL = () => {
                         </div>
                     </IconCard>
                 </div>
-                <div className="px-2 flex-1 max-h-[70%]  w-full relative ">
-                    <div className="border border-divide border-t-0 border-[0.5px] max-w-3xl mx-auto flex items-center justify-center">
-
-                        <LiquidImage src={"/agentix-logo.png"} />
+                <div className="px-2 flex-1 min-h-[70%]   w-full relative ">
+                    <div className="h-full border border-divide relative border-t-0 border-[0.5px] max-w-3xl mx-auto flex items-center justify-center">
+                        <LiquidImage
+                            className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  sm:max-h-none"
+                            src={"/agentix-logo.png"}
+                        />
+                        <PixelBlast
+                            variant="square"
+                            pixelSize={4}
+                            color="#f73859"
+                            patternScale={2}
+                            patternDensity={1}
+                            // pixelSizeJitter={0}
+                            enableRipples
+                            rippleSpeed={0.1}
+                            // rippleThickness={0.12}
+                            // rippleIntensityScale={1.5}
+                            // liquid={false}
+                            // liquidStrength={0.12}
+                            // liquidRadius={1.2}
+                            // liquidWobbleSpeed={5}
+                            speed={0.1}
+                            edgeFade={0.7}
+                            transparent
+                        />
+                        <div className="absolute -bottom-px left-1/2 -translate-x-1/2 translate-y-1/2 flex gap-2 z-20 text-xs sm:text-sm">
+                            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                                <DialogTrigger asChild>
+                                    <Button className="whitespace-nowrap px-3 py-1.5 sm:px-4 sm:py-2">
+                                        Join Waiting List
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent className="px-4">
+                                    <IconModal>
+                                        <DialogHeader className="mb-4">
+                                            <DialogTitle className="text-base md:text-lg">
+                                                Join the Agentix waitlist
+                                            </DialogTitle>
+                                            <DialogDescription>
+                                                Be the first to know when new agentic workflow features
+                                                and components drop.
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <form onSubmit={handleSubmit} className="space-y-4">
+                                            <div className="space-y-1">
+                                                <label
+                                                    htmlFor="waitlist-email"
+                                                    className="text-xs font-medium text-neutral-700 dark:text-neutral-300"
+                                                >
+                                                    Work email
+                                                </label>
+                                                <input
+                                                    id="waitlist-email"
+                                                    type="email"
+                                                    autoComplete="email"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    placeholder="you@company.com"
+                                                    className="block w-full rounded-md border border-divide bg-background px-3 py-2 text-sm outline-none ring-0 transition focus:border-brand focus:ring-1 focus:ring-brand dark:bg-neutral-950 text-[16px]"
+                                                    disabled={isSubmitting}
+                                                    required
+                                                />
+                                            </div>
+                                            <Button
+                                                type="submit"
+                                                className="w-full text-sm md:text-base"
+                                                disabled={isSubmitting}
+                                            >
+                                                {isSubmitting ? "Joining..." : "Join waitlist"}
+                                            </Button>
+                                        </form>
+                                    </IconModal>
+                                </DialogContent>
+                            </Dialog>
+                            <Button
+                                as={Link}
+                                href="/components"
+                                variant="secondary"
+                                className="whitespace-nowrap bg-stripes px-3 py-1.5 sm:px-4 sm:py-2"
+                            >
+                                View Components
+                            </Button>
+                        </div>
                     </div>
                     {/* <Canvas
                         flat
@@ -254,64 +334,6 @@ export const Hero3DWebGL = () => {
                         <Scene isMobile={isMobile} />
                         
                     </Canvas> */}
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 flex gap-2 z-10 text-xs sm:text-sm">
-                        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                            <DialogTrigger asChild>
-                                <Button className="whitespace-nowrap px-3 py-1.5 sm:px-4 sm:py-2">
-                                    Join Waiting List
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="px-4">
-                                <IconModal>
-                                    <DialogHeader className="mb-4">
-                                        <DialogTitle className="text-base md:text-lg">
-                                            Join the Agentix waitlist
-                                        </DialogTitle>
-                                        <DialogDescription>
-                                            Be the first to know when new agentic workflow features
-                                            and components drop.
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <form onSubmit={handleSubmit} className="space-y-4">
-                                        <div className="space-y-1">
-                                            <label
-                                                htmlFor="waitlist-email"
-                                                className="text-xs font-medium text-neutral-700 dark:text-neutral-300"
-                                            >
-                                                Work email
-                                            </label>
-                                            <input
-                                                id="waitlist-email"
-                                                type="email"
-                                                autoComplete="email"
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                placeholder="you@company.com"
-                                                className="block w-full rounded-md border border-divide bg-background px-3 py-2 text-sm outline-none ring-0 transition focus:border-brand focus:ring-1 focus:ring-brand dark:bg-neutral-950 text-[16px]"
-                                                disabled={isSubmitting}
-                                                required
-                                            />
-                                        </div>
-                                        <Button
-                                            type="submit"
-                                            className="w-full text-sm md:text-base"
-                                            disabled={isSubmitting}
-                                        >
-                                            {isSubmitting ? "Joining..." : "Join waitlist"}
-                                        </Button>
-                                    </form>
-                                </IconModal>
-                            </DialogContent>
-                        </Dialog>
-                        <Button
-                            as={Link}
-                            href="/components"
-                            variant="secondary"
-                            className="whitespace-nowrap bg-stripes px-3 py-1.5 sm:px-4 sm:py-2"
-                        >
-                            View Components
-                        </Button>
-                    </div>
                 </div>
             </div>
         </Container>
