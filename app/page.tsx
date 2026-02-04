@@ -12,7 +12,7 @@ export default function Home() {
     return (
         <>
             <DivideX />
-            {/* <Hero3D /> */}
+            <Hero3D />
             <DivideX />
             <LogoCloud />
             <DivideX />
